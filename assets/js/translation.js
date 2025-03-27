@@ -89,14 +89,10 @@ function localizeText(data, locale) {
 	
 	console.log(`${locale} is selected for showing language`);
 	
-	for (const key in data) {
-		
-		console.log("Key: ", key);
-		const spanElementForTranslation = document.getElementById(key);
-		console.log("isTrue: ", spanElementForTranslation);
-		
-		if(spanElementForTranslation){
-			spanElementForTranslation.textContent = data[key][locale];		
+	for (const key in data) {		
+		const elementToTranslate = document.getElementById(key);		
+		if(elementToTranslate){
+			elementToTranslate.textContent = data[key][locale];		
 		}
 	}
 }

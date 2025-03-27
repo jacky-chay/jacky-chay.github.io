@@ -55,13 +55,14 @@ function loadAndCacheJSONPromises(filename) {
 	// Check if the data is already in the cache
 	let cachedData = localStorage.getItem(filename);
 
-	if (cachedData) {
-	  resolve(JSON.parse(cachedData)); // Parse back into a JavaScript object
-	  return; // important to return here.
-	}
-	else{
-		console.log(`Trying to load data to cache`);
-	}
+	// console.log("isCachedData: ", cachedData);
+	// if (cachedData) {
+	  // resolve(JSON.parse(cachedData)); // Parse back into a JavaScript object
+	  // return; // important to return here.
+	// }
+	// else{
+		// console.log(`Trying to load data to cache`);
+	// }
 
 	fetch(filename)
 	  .then(response => {
@@ -81,6 +82,8 @@ function loadAndCacheJSONPromises(filename) {
   });
 }
 
+
+
 // This is the main method that do the localization job	
 function localizeText(data, locale) {
 	
@@ -88,7 +91,9 @@ function localizeText(data, locale) {
 	
 	for (const key in data) {
 		
+		console.log("Key: ", key);
 		const spanElementForTranslation = document.getElementById(key);
+		console.log("isTrue: ", spanElementForTranslation);
 		
 		if(spanElementForTranslation){
 			spanElementForTranslation.textContent = data[key][locale];		
@@ -99,9 +104,9 @@ function localizeText(data, locale) {
 	
 // Example using the Promises version
 function mainPromises() {
-  loadAndCacheJSONPromises('https://raw.githubusercontent.com/jacky-chay/filehost/refs/heads/main/translations.json')
+  loadAndCacheJSONPromises('https://raw.githubusercontent.com/jacky-chay/filehost/refs/heads/main/translations.json')  
 	.then(myData => {
-		console.debug("Data (Promises):", myData);
+		console.log("Data (Promises):", myData);
 		// Start localizing
 		localizeText(myData, getCurrentLocale());
 	})

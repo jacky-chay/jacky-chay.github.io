@@ -92,8 +92,8 @@
         "zh_CN": "通常在晚上非常活跃，要么在外面活动，要么待在家里享受游戏或编程。"
     },
    "factsOneTxtId": {
-        "en_US": "Days staying happy",
-        "zh_CN": "快乐的日子"
+        "en_US": "Leadership ability",
+        "zh_CN": "领导能力"
     },
    "factsTwoTxtId": {
         "en_US": "Passionate to IT Stuffs",
@@ -121,7 +121,7 @@
     },
    "iceBreakTxtId": {
         "en_US": "Innovative, deadline-driven and problem solving Software System Developer with 2 years of experience mainly developing Warehouse Automation software from initial concept to final, polished deliverable.",
-        "zh_CN": "具有创新精神、注重时效且善于解决问题的软件系统开发人员，拥有 2 年经验，主要负责开发仓库自动化软件，从最初的概念到最终完善的交付。"
+        "zh_CN": "具有创新精神、注重时效且善于解决问题的软件系统开发人员，拥有 5 年经验，主要负责开发仓库自动化软件，从最初的概念到最终完善的交付。"
     },
    "educationalQualitificationTxtId": {
         "en_US": "Educational Qualifications",
@@ -132,8 +132,8 @@
         "zh_CN": "信息技术（荣誉）学士学位，主修软件系统开发"
     },
    "degreeCollegeNameTxtId": {
-        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL)",
-        "zh_CN": "吉隆坡东姑阿都拉曼学院 (TARC, KL)"
+        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL, Malaysia)",
+        "zh_CN": "吉隆坡东姑阿都拉曼学院 (马来西亚，吉隆坡，TARC)"
     },
    "degreeGradeTxtId": {
         "en_US": "Achieved overall Merit grade",
@@ -144,8 +144,8 @@
         "zh_CN": "计算机科学信息系统工程文凭"
     },
    "diplomaCollegeNameTxtId": {
-        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL)",
-        "zh_CN": "吉隆坡东姑阿都拉曼学院 (TARC, KL)"
+        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL, Malaysia)",
+        "zh_CN": "吉隆坡东姑阿都拉曼学院 (马来西亚，吉隆坡，TARC)"
     },
    "diplomaGradeTxtId": {
         "en_US": "Achieved overall Merit grade",
@@ -288,8 +288,8 @@
         "zh_CN": "Advance Group 活跃成员"
     },
    "swimmingCollegeTxtId": {
-        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL)",
-        "zh_CN": "吉隆坡拉曼大学学院 (TARC, KL)"
+        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL, Malaysia)",
+        "zh_CN": "吉隆坡拉曼大学学院 (马来西亚，吉隆坡，TARC)"
     },
    "swimmingPointOneTxtId": {
         "en_US": "As an active member of the Advance Group",
@@ -312,8 +312,8 @@
         "zh_CN": "主席"
     },
    "gymCollegeTxtId": {
-        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL)",
-        "zh_CN": "吉隆坡拉曼大学学院 (TARC, KL)"
+        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL, Malaysia)",
+        "zh_CN": "吉隆坡拉曼大学学院 (马来西亚，吉隆坡，TARC)"
     },
    "gymPointOneTxtId": {
         "en_US": "Leading a group of 60 TARC students that joined Gymnasium",

@@ -1064,3 +1064,75 @@ section {
   background-color: RoyalBlue;
   color: white;
 }
+
+
+
+
+/* Customized for Translation related CSS  */
+.language-container {
+	margin-top: 50px;
+	padding: 30px;
+	border-radius: 12px; /* Rounded corners */
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Shadow */
+	width: 100%;
+	max-width: 500px; /* Maximum width */
+	text-align: center;
+}
+
+#languageSelect {
+	appearance: none; /* Remove default arrow */
+	-webkit-appearance: none; /* For Safari */
+	-moz-appearance: none; /* For Firefox */
+	padding: 12px 30px 12px 16px; /* Padding, increased right padding for custom arrow */
+	font-size: 16px;
+	border: 1px solid #e0e0e0; /* Border */
+	border-radius: 8px; /* Rounded corners */
+	width: 100%; /* Full width */
+	max-width: 300px; /* Maximum width */
+	background-color: #ffffff; /* White background */
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); /* Custom arrow */
+	background-repeat: no-repeat;
+	background-position: right 12px center; /* Position the arrow */
+	background-size: 16px; /* Size of the arrow */
+	cursor: pointer; /* Cursor style on hover */
+	transition: border-color 0.2s ease; /* Smooth transition */
+	font-family: 'Inter', sans-serif;
+}
+
+#languageSelect:focus {
+	outline: none; /* Remove default outline */
+	border-color: #6b7280; /* Focus border color */
+	box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.15); /* Focus shadow */
+}
+
+#languageSelect option {
+	font-size: 16px;
+	color: #333;
+}
+
+#languageSelect option:hover {
+	background-color: #f0f0f0;
+}
+
+.select-wrapper {
+	position: relative; /* To position the custom arrow */
+	display: inline-flex; /* Use inline-flex for better alignment */
+	align-items: center;
+	width: 100%;
+	max-width: 300px; /* same max-width as select */
+}
+
+.select-wrapper::after {
+	/* This is the custom arrow, but using a pseudo-element is more complex to style and position consistently */
+	content: "";
+	position: absolute;
+	top: 50%;
+	right: 12px;
+	transform: translateY(-50%);
+	width: 0.6em;
+	height: 0.6em;
+	border-top: 0.15em solid #9ca3af; /* Tailwind gray-400 equivalent */
+	border-right: 0.15em solid #9ca3af; /* Tailwind gray-400 equivalent */
+	transform: rotate(135deg);
+	pointer-events: none; /* Ensures the arrow doesn't interfere with clicks */
+}

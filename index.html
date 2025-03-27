@@ -32,17 +32,11 @@
 
 <body>
 
+
   <!-- ======= Mobile nav toggle button ======= -->
   <!-- <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list mobile-nav-toggle"></i></button> -->
   <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-  
-	  <!-- Change Language -->
-	  <!-- <select id="changeLanguage" name="changeLanguage"> -->
-		<!-- <option>Select Language</option>  -->
-		<!-- <option value="en_US">English</option>  -->
-		<!-- <option value="zh_CN">Chinese</option>  -->
-	  <!-- </select> -->
-	  
+  	  
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex flex-column justify-content-center">
 
@@ -75,6 +69,20 @@
         <a href="https://www.linkedin.com/in/kun-wai-chay-75a638233" class="linkedin" target="_blank" rel="noopener noreferrer"><i class="bx bxl-linkedin"></i></a>
 		<a href="https://wa.me/601111351951" class="whatsapp" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i></a>
       </div>
+	  
+	  
+	<!-- Change Language -->	  
+	<div class="language-container">
+        <h2 class="language-title">Select a Language</h2>
+        <div class="select-wrapper">
+            <select id="languageSelect" onchange="languageSelected()">
+                <option value="">-- Select a Language --</option>
+                <option value="en_US">English</option>
+                <option value="zh_CN">中文</option>
+            </select>
+        </div>
+    </div>
+	  
     </div>
   </section>
   <!-- End Hero -->
@@ -797,6 +805,9 @@
   
   <!-- Custom JS files -->
   <script src="assets/js/custom.js"></script>
+    
+  <!-- Custom JS files -->
+  <script src="assets/js/translation.js"></script>
 
 </body>
 

@@ -1,0 +1,362 @@
+{
+   "menuHome": {
+        "en_US": "Home",
+        "zh_CN": "首页"
+    },
+   "menuAbout": {
+        "en_US": "About",
+        "zh_CN": "关于我"
+    },
+   "menuSkills": {
+        "en_US": "Skills",
+        "zh_CN": "技能"
+    },
+   "menuResume": {
+        "en_US": "Resume",
+        "zh_CN": "简历"
+    },
+   "menuContact": {
+        "en_US": "Contact",
+        "zh_CN": "联系"
+    },
+   "selectLanguageId": {
+        "en_US": "Select a Language",
+        "zh_CN": "选择语言"
+    },
+   "selectLanguageOption": {
+        "en_US": "-- Select a Language --",
+        "zh_CN": "-- 选择语言 --"
+    },
+   "downloadResumeBtnIdTxt": {
+        "en_US": "Download Resume in PDF",
+        "zh_CN": "下载PDF简历"
+    },
+   "aboutTxtId": {
+        "en_US": "Someone who was borned to be passionate to accept challenges and expanding skills and abilities. Friendly and was called once a phlegmatic.",
+        "zh_CN": "我天生就充满热情，喜欢接受挑战并扩展技能和能力。 友善，曾经被称为冷静型的人。"
+    },
+   "softwareSystemDeveloperTxtId": {
+        "en_US": "Software System Developer",
+        "zh_CN": "软件系统开发工程师"
+    },
+   "softwareSystemDeveloperDescTxtId": {
+        "en_US": "Very interested with programming and developing softwares and apps.",
+        "zh_CN": "对编程和开发软件及应用程序非常感兴趣。"
+    },
+   "birthYearTxtId": {
+        "en_US": "Birth Year",
+        "zh_CN": "出生年份"
+    },
+   "cityValueTxtId": {
+        "en_US": "Selangor, Malaysia",
+        "zh_CN": "雪兰莪，马来西亚"
+    },
+   "cityValueTwoTxtId": {
+        "en_US": "Selangor, Malaysia",
+        "zh_CN": "雪兰莪，马来西亚"
+    },
+   "cityTxtId": {
+        "en_US": "City",
+        "zh_CN": "城市"
+    },
+   "ageTxtId": {
+        "en_US": "Age",
+        "zh_CN": "年龄"
+    },
+   "degreeTxtId": {
+        "en_US": "Degree",
+        "zh_CN": "学历"
+    },
+   "degreeValueTxtId": {
+        "en_US": "Bachelor of Information Technology (Honours) in Software Systems Development",
+        "zh_CN": "信息技术（荣誉）软件系统开发学士"
+    },
+   "hobbyOneTxtId": {
+        "en_US": "Have a hobby to write my own apps and softwares to make my life easier. Interested in learning Ethical Hacking with Kali Linux.",
+        "zh_CN": "喜欢编写自己的应用程序和软件，以使我的生活更轻松。 对使用 Kali Linux 学习黑客技术很感兴趣。"
+    },
+   "hobbyTwoTxtId": {
+        "en_US": "Play alot of sports, badminton, pingpong, squash, jungle tracking, to get healthier. Gets addicted recently to Scuba Diving to get closer to the mother nature.",
+        "zh_CN": "做很多运动，羽毛球、乒乓球、壁球、丛林徒步旅行，以保持健康。 最近迷上了水肺潜水，以更接近大自然。"
+    },
+   "aboutTitleTxtId": {
+        "en_US": "About",
+        "zh_CN": "关于"
+    },
+   "factsTitleTxtId": {
+        "en_US": "Facts",
+        "zh_CN": "事实"
+    },
+   "factsTxtId": {
+        "en_US": "Usually very active on night, either having activities outside or staying at home enjoying with games or programming.",
+        "zh_CN": "通常在晚上非常活跃，要么在外面活动，要么待在家里享受游戏或编程。"
+    },
+   "factsOneTxtId": {
+        "en_US": "Leadership ability",
+        "zh_CN": "领导能力"
+    },
+   "factsTwoTxtId": {
+        "en_US": "Passionate to IT Stuffs",
+        "zh_CN": "对IT事物充满热情"
+    },
+   "factsThreeTxtId": {
+        "en_US": "Passionate to learn new things",
+        "zh_CN": "热衷于学习新事物"
+    },
+   "factsFourTxtId": {
+        "en_US": "Friendlyness",
+        "zh_CN": "友善"
+    },
+   "skillsTitleTxtId": {
+        "en_US": "Skills",
+        "zh_CN": "技能"
+    },
+   "resumeTxtId": {
+        "en_US": "Resume",
+        "zh_CN": "简历"
+    },
+   "resumeDescTxtId": {
+        "en_US": "A short, simple and straight to point resume.",
+        "zh_CN": "一份简短、简洁、直奔主题的简历。"
+    },
+   "iceBreakTxtId": {
+        "en_US": "Innovative, deadline-driven and problem solving Software System Developer with 2 years of experience mainly developing Warehouse Automation software from initial concept to final, polished deliverable.",
+        "zh_CN": "具有创新精神、注重时效且善于解决问题的软件系统开发人员，拥有 5 年经验，主要负责开发仓库自动化软件，从最初的概念到最终完善的交付。"
+    },
+   "educationalQualitificationTxtId": {
+        "en_US": "Educational Qualifications",
+        "zh_CN": "教育背景"
+    },
+   "degreeQualificationTxtId": {
+        "en_US": "Bachelor of Information Technology (Honours) in Software Systems Development",
+        "zh_CN": "信息技术（荣誉）学士学位，主修软件系统开发"
+    },
+   "degreeCollegeNameTxtId": {
+        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL, Malaysia)",
+        "zh_CN": "吉隆坡东姑阿都拉曼学院 (马来西亚，吉隆坡，TARC)"
+    },
+   "degreeGradeTxtId": {
+        "en_US": "Achieved overall Merit grade",
+        "zh_CN": "总成绩优秀"
+    },
+   "diplomaQualificationTxtId": {
+        "en_US": "Diploma of Information System Engineering in Computer Science",
+        "zh_CN": "计算机科学信息系统工程文凭"
+    },
+   "diplomaCollegeNameTxtId": {
+        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL, Malaysia)",
+        "zh_CN": "吉隆坡东姑阿都拉曼学院 (马来西亚，吉隆坡，TARC)"
+    },
+   "diplomaGradeTxtId": {
+        "en_US": "Achieved overall Merit grade",
+        "zh_CN": "总成绩优秀"
+    },
+   "professionalExperienceTxtId": {
+        "en_US": "Professional Experience",
+        "zh_CN": "工作经验"
+    },
+   "backendLeadEngineerTxtId": {
+        "en_US": "Backend Lead Engineer (Based In China)",
+        "zh_CN": "后端开发领导 (中国)"
+    },
+   "backendLeadEngineerPeriodTxtId": {
+        "en_US": "Since Dec 2024 - Present",
+        "zh_CN": "自 2024 年 12 月至今"
+    },
+   "backendLeadEngineerPointOneTxtId": {
+        "en_US": "Leading projects",
+        "zh_CN": "领导项目"
+    },
+   "backendLeadEngineerPointTwoTxtId": {
+        "en_US": "Involved in developing and implementing core features to the system",
+        "zh_CN": "参与系统核心功能的开发与实施"
+    },
+   "backendLeadEngineerPointThreeTxtId": {
+        "en_US": "Involved in projects coming from different countries to implement different features according to requirement",
+        "zh_CN": "参与来自不同国家的项目，根据需求实施不同的功能"
+    },
+   "backendLeadEngineerPointFourTxtId": {
+        "en_US": "Babysit new joiners and give appropriate trainings",
+        "zh_CN": "指导新员工并提供适当的培训"
+    },
+   "neteaseBusinessPartnerTxtId": {
+        "en_US": "NetEase, Inc - Malaysia Business Partner (Remote)",
+        "zh_CN": "网易公司 - 马来西亚业务合作伙伴 (远程)"
+    },
+   "neteaseBusinessPartnerPeriodTxtId": {
+        "en_US": "Since 2022 - Present",
+        "zh_CN": "自 2022 年至今"
+    },
+   "neteaseBusinessPartnerProductTxtId": {
+        "en_US": "UU Game Booster & GearUP Game Booster",
+        "zh_CN": "UU 加速器 & GearUP 加速器"
+    },
+   "neteaseBusinessPartnerPointOneTxtId": {
+        "en_US": "Involved in conducting researches of the company's products",
+        "zh_CN": "参与公司产品的调研工作"
+    },
+   "neteaseBusinessPartnerPointTwoTxtId": {
+        "en_US": "Involved to conduct market surveys",
+        "zh_CN": "参与市场调查"
+    },
+   "neteaseBusinessPartnerPointThreeTxtId": {
+        "en_US": "Involved in R&D related matters such as product testing",
+        "zh_CN": "参与研发相关事务，如产品测试"
+    },
+   "neteaseBusinessPartnerPointFourTxtId": {
+        "en_US": "Involved in conducting interviews with players",
+        "zh_CN": "参与玩家访谈"
+    },
+   "softwareApplicationEngineerTxtId": {
+        "en_US": "Software Application Engineer (Based In Malaysia)",
+        "zh_CN": "软件应用工程师 (马来西亚)"
+    },
+   "softwareApplicationEngineerPeriodTxtId": {
+        "en_US": "Since Aug 2020 - Nov 2024 (4 years 3 months)",
+        "zh_CN": "自 2020 年 8 月至 2024 年 11 月 (4 年 3 个月)"
+    },
+   "softwareApplicationEngineerCompanyTxtId": {
+        "en_US": "Swisslog Malaysia Sdn. Bhd.",
+        "zh_CN": "瑞仕格马来西亚有限公司"
+    },
+   "softwareApplicationEngineerPointOneTxtId": {
+        "en_US": "Add & Optimize the features from Swisslog project's standard",
+        "zh_CN": "根据瑞仕格项目标准添加和优化功能"
+    },
+   "softwareApplicationEngineerPointTwoTxtId": {
+        "en_US": "Involved in developing and implementing core features to the system",
+        "zh_CN": "参与系统核心功能的开发与实施"
+    },
+   "softwareApplicationEngineerPointThreeTxtId": {
+        "en_US": "Provide quality tests to ensure the feature works as expected",
+        "zh_CN": "提供质量测试，以确保功能按预期工作"
+    },
+   "softwareApplicationEngineerPointFourTxtId": {
+        "en_US": "Involved in projects coming from different countries to implement different features according to requirement",
+        "zh_CN": "参与来自不同国家的项目，根据需求实施不同的功能"
+    },
+   "siriuslabTxtId": {
+        "en_US": "Founder & Director (Based In Malaysia)",
+        "zh_CN": "创始人与董事 (马来西亚)"
+    },
+   "siriuslabPeriodTxtId": {
+        "en_US": "Since 2021 - 2024 (3 years)",
+        "zh_CN": "自 2021 年至 2024 年 (3 年)"
+    },
+   "siriuslabPointOneTxtId": {
+        "en_US": "Role as leader, to mainly leads the whole company towards the goal",
+        "zh_CN": "担任领导者角色，主要带领整个公司朝着目标前进"
+    },
+   "siriuslabPointTwoTxtId": {
+        "en_US": "Role as the Software Architect for the company's products",
+        "zh_CN": "担任公司产品的软件架构师"
+    },
+   "siriuslabPointThreeTxtId": {
+        "en_US": "Role as project manager to ensure project delivery is under control",
+        "zh_CN": "担任项目经理，以确保项目交付受控"
+    },
+   "cocurricularTxtId": {
+        "en_US": "Co-curricular Activities",
+        "zh_CN": "课外活动"
+    },
+   "scubaDivingTxtId": {
+        "en_US": "Scuba Diving",
+        "zh_CN": "水肺潜水"
+    },
+   "scubaDivingPeriodTxtId": {
+        "en_US": "2021 - Present",
+        "zh_CN": "2021年 - 至今"
+    },
+   "scubaDivingRankTxtId": {
+        "en_US": "Advanced Open Water Scuba Diver",
+        "zh_CN": "高级开放水域潜水员"
+    },
+   "scubaDivingCertTxtId": {
+        "en_US": "Professional Association of Diving Instructors (PADI)",
+        "zh_CN": "专业潜水教练协会 (PADI)"
+    },
+   "scubaDivingDescTxtId": {
+        "en_US": "As an active scuba diver of the Advance Group",
+        "zh_CN": "作为Advance Group的活跃水肺潜水员"
+    },
+   "swimmingTxtId": {
+        "en_US": "Swimming",
+        "zh_CN": "游泳"
+    },
+   "swimmingRankTxtId": {
+        "en_US": "Advance Group Active member",
+        "zh_CN": "Advance Group 活跃成员"
+    },
+   "swimmingCollegeTxtId": {
+        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL, Malaysia)",
+        "zh_CN": "吉隆坡拉曼大学学院 (马来西亚，吉隆坡，TARC)"
+    },
+   "swimmingPointOneTxtId": {
+        "en_US": "As an active member of the Advance Group",
+        "zh_CN": "作为Advance Group的活跃成员"
+    },
+   "swimmingPointTwoTxtId": {
+        "en_US": "Learn advanced swimming skills and rescueing skills",
+        "zh_CN": "学习高级游泳技巧和救援技巧"
+    },
+   "swimmingPointThreeTxtId": {
+        "en_US": "Help on training beginner groups weekly",
+        "zh_CN": "每周帮助培训初学者组"
+    },
+   "gymTxtId": {
+        "en_US": "Gymnasium",
+        "zh_CN": "健身房"
+    },
+   "gymRankTxtId": {
+        "en_US": "President",
+        "zh_CN": "主席"
+    },
+   "gymCollegeTxtId": {
+        "en_US": "Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL, Malaysia)",
+        "zh_CN": "吉隆坡拉曼大学学院 (马来西亚，吉隆坡，TARC)"
+    },
+   "gymPointOneTxtId": {
+        "en_US": "Leading a group of 60 TARC students that joined Gymnasium",
+        "zh_CN": "带领60名加入健身房的拉曼大学学院学生"
+    },
+   "gymPointTwoTxtId": {
+        "en_US": "Organized sport competitions, arrange sports activities for them to train on a weekly",
+        "zh_CN": "组织体育比赛，安排每周的体育活动训练"
+    },
+   "gymPointThreeTxtId": {
+        "en_US": "Designed our own T-Shirt with Gymnasium logo on it",
+        "zh_CN": "设计我们自己的带有健身房标志的T恤"
+    },
+   "mathSocialTxtId": {
+        "en_US": "Mathematical Society",
+        "zh_CN": "数学学会"
+    },
+   "mathSocialRankTxtId": {
+        "en_US": "President",
+        "zh_CN": "主席"
+    },
+   "mathSocialPointOneTxtId": {
+        "en_US": "Leading a group of 50 members under the society",
+        "zh_CN": "带领学会旗下 50 名成员"
+    },
+   "mathSocialPointTwoTxtId": {
+        "en_US": "Organized a few activities such as hosting station games during school fairs and mathematical quiz during classes",
+        "zh_CN": "组织了一些活动，例如在学校集市期间举办站点游戏，以及在课堂上进行数学测验"
+    },
+   "locationFooterTxtId": {
+        "en_US": "Location",
+        "zh_CN": "地点"
+    },
+   "locationFooterValueTxtId": {
+        "en_US": "Malaysia, China",
+        "zh_CN": "马来西亚，中国"
+    },
+   "emailFooterTxtId": {
+        "en_US": "Email",
+        "zh_CN": "邮箱"
+    },
+   "callFooterTxtId": {
+        "en_US": "Call",
+        "zh_CN": "电话"
+    }
+}

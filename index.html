@@ -32,27 +32,21 @@
 
 <body>
 
+
   <!-- ======= Mobile nav toggle button ======= -->
   <!-- <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list mobile-nav-toggle"></i></button> -->
   <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-  
-	  <!-- Change Language -->
-	  <!-- <select id="changeLanguage" name="changeLanguage"> -->
-		<!-- <option>Select Language</option>  -->
-		<!-- <option value="en_US">English</option>  -->
-		<!-- <option value="zh_CN">Chinese</option>  -->
-	  <!-- </select> -->
-	  
+  	  
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex flex-column justify-content-center">
 
     <nav id="navbar" class="navbar nav-menu">
       <ul>
-        <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
-        <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-        <li><a href="#skills" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Skills</span></a></li>
-        <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
-        <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+        <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span id="menuHome"></span></a></li>
+        <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span id="menuAbout"></span></a></li>
+        <li><a href="#skills" class="nav-link scrollto"><i class="bx bx-server"></i> <span id="menuSkills"></span></a></li>
+        <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span id="menuResume"></span></a></li>
+        <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span id="menuContact"></span></a></li>
         <!-- <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li> -->
       </ul>
     </nav>
@@ -65,7 +59,8 @@
   <section id="hero" class="d-flex flex-column justify-content-center">
     <div class="container" data-aos="zoom-in" data-aos-delay="100">
 	
-      <h1>Chay Kun Wai, Jacky</h1>
+      <h1>Chay Kun Wai, Jacky</h1> </br>
+      <h1>谢官韦</h1>
       <p>I'm a <span class="typed" data-typed-items="Founder / Director of Sirius Lab, Software System Developer, NetEast Business Partner, Scuba Diver"></span></p>
       <div class="social-links">
         <!-- <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a> -->
@@ -75,6 +70,20 @@
         <a href="https://www.linkedin.com/in/kun-wai-chay-75a638233" class="linkedin" target="_blank" rel="noopener noreferrer"><i class="bx bxl-linkedin"></i></a>
 		<a href="https://wa.me/601111351951" class="whatsapp" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i></a>
       </div>
+	  
+	  
+	<!-- Change Language -->	  
+	<div class="language-container">
+        <h2 class="language-title"><span id="selectLanguageId" /></h2>
+        <div class="select-wrapper">
+            <select id="languageSelect" onchange="languageSelected()">
+                <option value=""><span id="selectLanguageOption" /></option>
+                <option value="en_US">English</option>
+                <option value="zh_CN">中文</option>
+            </select>
+        </div>
+    </div>
+	  
     </div>
   </section>
   <!-- End Hero -->
@@ -87,7 +96,7 @@
 	<!-- </a>	 -->
 	<button class="btnDownload" onclick="window.open('assets/download/Chay Kun Wai - Resume.pdf')" target="_blank" >
 		<i class="fa fa-download"></i> 
-		Download Resume in PDF
+		<span id="downloadResumeBtnIdTxt" />
 	</button>
 
     <!-- ======= About Section ======= -->
@@ -95,8 +104,8 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>About</h2>
-          <p>Someone who was borned to be passionate to accept challenges and expanding skills and abilities. Friendly and was called once a phlegmatic.</p>
+          <h2><span id="aboutTitleTxtId" /></h2>
+          <p><span id="aboutTxtId" /></p>
         </div>
 
         <div class="row">
@@ -104,32 +113,27 @@
             <img src="assets/img/profile-img.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content">
-            <h3>Software System Developer</h3>
+            <h3><span id="softwareSystemDeveloperTxtId" /></h3>
             <p class="fst-italic">
-              Very interested with programming and developing softwares and apps.
+              <span id="softwareSystemDeveloperDescTxtId" />
             </p>
             <div class="row">
               <div class="col-lg-6">
                 <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Birth Year:</strong> <span id="birthYear" /></li>
-                  <!-- <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span><a href="#">My Page</a></span></li> -->
-                  <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Selangor, Malaysia</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong><span id="birthYearTxtId"></span>:</strong> <span id="birthYear" /></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong><span id="cityTxtId"></span>:</strong> <span id="cityValueTxtId"></span></li>
                 </ul>
               </div>
               <div class="col-lg-6">
                 <ul>
-				  <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span id="age" /></li>					
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Bachelor of Information Technology (Honours) in Software Systems Development</span></li>
-                  <!-- <li><i class="bi bi-chevron-right"></i> <strong>PhEmailone:</strong> <span>email@example.com</span></li> -->
-                  <!-- <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li> -->
+				  <li><i class="bi bi-chevron-right"></i> <strong><span id="ageTxtId"></span>:</strong> <span id="age" /></li>					
+                  <li><i class="bi bi-chevron-right"></i> <strong><span id="degreeTxtId"></span>:</strong> <span><span id="degreeValueTxtId"></span></span></li>
                 </ul>
               </div>
             </div>
             <p>
-			  Have a hobby to write my own apps and softwares to make my life easier. <br/>
-			  Interested in learning Ethical Hacking with Kali Linux. <br/><br/>
-              Play alot of sports, badminton, pingpong, squash, jungle tracking, to get healthier. <br/>
-			  Gets addicted recently to Scuba Diving to get closer to the mother nature. <br/>
+			  <span id="hobbyOneTxtId" /><br/><br/>
+              <span id="hobbyTwoTxtId" /><br/>
             </p>
           </div>
         </div>
@@ -143,8 +147,8 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Facts</h2>
-          <p>Usually very active on night, either having activities outside or staying at home enjoying with games or programming.</p>
+          <h2><span id="factsTitleTxtId" /></h2>
+          <p><span id="factsTxtId" /></p>
         </div>
 
         <div class="row">
@@ -152,8 +156,8 @@
           <div class="col-lg-3 col-md-6">
             <div class="count-box">
               <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="365" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Days staying happy</p>
+              <span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="1" class="purecounter"></span>
+              <p><span id="factsOneTxtId"/></p>
             </div>
           </div>
 
@@ -161,7 +165,7 @@
             <div class="count-box">
               <i class="bi bi-journal-richtext"></i>
               <span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Passionate to IT Stuffs</p>
+              <p><span id="factsTwoTxtId"/></p>
             </div>
           </div>
 
@@ -169,7 +173,7 @@
             <div class="count-box">
               <i class="bi bi-headset"></i>
               <span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Passionate to learn new things</p>
+              <p><span id="factsThreeTxtId"/></p>
             </div>
           </div>
 
@@ -177,7 +181,7 @@
             <div class="count-box">
               <i class="bi bi-award"></i>
               <span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Friendlyness</p>
+              <p><span id="factsFourTxtId"/></p>
             </div>
           </div>
 
@@ -192,8 +196,8 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Skills</h2>
-          <p>Looking forward to enhancing and improving my current knowledge and skills.</p>
+          <h2><span id="skillsTitleTxtId"/></h2>
+          <p><span id="skillsTxtId"/></p>
         </div>
 
         <div class="row skills-content">
@@ -552,8 +556,8 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Resume</h2>
-          <p>A short, simple and straight to point resume.</p>
+          <h2><span id="resumeTxtId"/></h2>
+          <p><span id="resumeDescTxtId"/></p>
         </div>
 
         <div class="row">
@@ -561,132 +565,134 @@
             <h3 class="resume-title">Sumary</h3>
             <div class="resume-item pb-0">
               <h4>Chay Kun Wai, Jacky</h4>
-              <p><em>Innovative, deadline-driven and problem solving Software System Developer with 2 years of experience mainly developing Warehouse Automation software from initial concept to final, polished deliverable.</em></p>
+              <h4>谢官韦</h4>
+              <p><em><span id="iceBreakTxtId"/></em></p>
               <ul>
-                <li>Selangor, Malaysia</li>
-                <li>(60) 11-11351951</li>
+                <li><span id="cityValueTwoTxtId"/></li>
+                <li>+(60) 11-11351951</li>
                 <li>jackychay@live.com</li>
               </ul>
             </div>
 
-            <h3 class="resume-title">Educational Qualifications</h3>
+            <h3 class="resume-title"><span id="educationalQualitificationTxtId"/></h3>
             <div class="resume-item">
-              <h4>Bachelor of Information Technology (Honours) in <br> Software Systems Development</h4>
+              <h4><span id="educationalQualitificationTxtId"/></h4>
               <h5>2018 - 2020</h5>
-              <p><em>Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL)</em></p>
-              <p>Achieved overall Merit grade</p>
+              <p><em><span id="degreeCollegeNameTxtId"/></em></p>
+              <p><span id="degreeGradeTxtId"/></p>
             </div>
             <div class="resume-item">
-              <h4>Diploma of Information System Engineering in <br> Computer Science</h4>
+              <h4><span id="diplomaQualificationTxtId"/></h4>
               <h5>2015 - 2017</h5>
-              <p><em>Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL)</em></p>
-              <p>Achieved overall Merit grade</p>
+              <p><em><span id="diplomaCollegeNameTxtId"/></em></p>
+              <p><span id="diplomaGradeTxtId"/></p>
             </div>
           </div>
           <div class="col-lg-6">
-            <h3 class="resume-title">Professional Experience</h3>
+            <h3 class="resume-title"><span id="professionalExperienceTxtId"/></h3>
 									
             <div class="resume-item">
-              <h4>Backend Lead Engineer (Based In China)</h4>
-              <h5>Since Dec 2024 - Present</h5>
+              <h4><span id="backendLeadEngineerTxtId"/></h4>
+              <h5><span id="backendLeadEngineerPeriodTxtId"/></h5>
               <p>
-				<em>Midea Group 美的集团 </em> - 
+				<em>Midea Group 美的集团 </em> 
+				<!-- <a href="https://www.kuka.com/" > https://www.swisslog.com/ </a> -->
 				<!-- <a href="https://www.swisslog.com/" > https://www.swisslog.com/ </a> -->
 			  </p>
               <ul>
-                <li>Leading projects</li>
-                <li>Involved in developing and implementing core features to the system</li>
-                <li>Involved in projects coming from different countries to implement different features according to requirement</li>
-				<li>Babysit new joiners and give appropriate trainings</li>
+                <li><span id="backendLeadEngineerPointOneTxtId"/></li>
+                <li><span id="backendLeadEngineerPointTwoTxtId"/></li>
+                <li><span id="backendLeadEngineerPointThreeTxtId"/></li>
+				<li><span id="backendLeadEngineerPointFourTxtId"/></li>
               </ul>
             </div>	
 			
 			<div class="resume-item">
-              <h4>NetEase, Inc - Malaysia Business Partner (Remote)</h4>
-              <h5>Since 2022 - Present</h5>
+              <h4><span id="neteaseBusinessPartnerTxtId"/></h4>
+              <h5><span id="neteaseBusinessPartnerPeriodTxtId"/></h5>
               <p>
-				<em>UU Game Booster & GearUP Game Booster</em> - <br/>
+				<em><span id="neteaseBusinessPartnerProductTxtId"/></em> - <br/>
 				<a href="https://www.uubooster.com/" > https://www.uubooster.com/ </a> <br/>
 				<a href="https://www.gearupbooster.com/" > https://www.gearupbooster.com/ </a>				
 			  </p>
               <ul>
-				<li>Involved in conducting researches of the company's products</li>
-				<li>Involved to conduct market surveys</li>
-				<li>Involved in R&D related matters such as product testing</li>
-				<li>Involved in conducting interviews with players</li>
+				<li><span id="neteaseBusinessPartnerPointOneTxtId"/></li>
+				<li><span id="neteaseBusinessPartnerPointTwoTxtId"/></li>
+				<li><span id="neteaseBusinessPartnerPointThreeTxtId"/></li>
+				<li><span id="neteaseBusinessPartnerPointFourTxtId"/></li>
               </ul>
             </div>		
 
             <div class="resume-item">
-              <h4>Software Application Engineer (Based In Malaysia)</h4>
-              <h5>Since Aug 2020 - Nov 2024 (4 years 3 months)</h5>
+              <h4><span id="softwareApplicationEngineerTxtId"/></h4>
+              <h5><span id="softwareApplicationEngineerPeriodTxtId"/></h5>
               <p>
-				<em>Swisslog Malaysia Sdn. Bhd. </em> - 
+				<em><span id="softwareApplicationEngineerCompanyTxtId"/></em> - 
 				<a href="https://www.swisslog.com/" > https://www.swisslog.com/ </a>
 			  </p>
               <ul>
-                <li>Add & Optimize the features from Swisslog project's standard</li>
-                <li>Involved in developing and implementing core features to the system</li>
-                <li>Provide quality tests to ensure the feature works as expected</li>
-                <li>Involved in projects coming from different countries to implement different features according to requirement</li>
+                <li><span id="softwareApplicationEngineerPointOneTxtId"/></li>
+                <li><span id="softwareApplicationEngineerPointTwoTxtId"/></li>
+                <li><span id="softwareApplicationEngineerPointThreeTxtId"/></li>
+                <li><span id="softwareApplicationEngineerPointFourTxtId"/></li>
               </ul>
             </div>			
 			
 			<div class="resume-item">
-              <h4>Founder & Director (Based In Malaysia)</h4>
-              <h5>Since 2021 - 2024 (3 years)</h5> 
+              <h4><span id="siriuslabTxtId"/></h4>
+              <h5><span id="siriuslabPeriodTxtId"/></h5> 
               <p>
 				  <em>Sirius Lab</em> - 
 				  <a href="https://jacky-chay.github.io/siriuslab/" target="_blank" > https://www.siriuslabmy.com/ </a>
 				  <!-- <a href="https://jacky-chay.github.io/siriuslab/" > https://jacky-chay.github.io/siriuslab/ </a> -->
 			  </p>
               <ul>
-                <li>Role as leader, to mainly leads the whole company towards the goal</li>
-				<li>Role as the Software Architect for the company's products</li>
-				<li>Role as project manager to ensure project delivery is under control</li>
+                <li><span id="siriuslabPointOneTxtId"/></li>
+				<li><span id="siriuslabPointTwoTxtId"/></li>
+				<li><span id="siriuslabPointThreeTxtId"/></li>
               </ul>
             </div>
 			
-			<h3 class="resume-title">Co-curricular Activities</h3>
+			<h3 class="resume-title"><span id="cocurricularTxtId"/></h3>
 			<div class="resume-item">
-              <h4>Scuba Diving </h4>
-              <h5>2021 - Present </h5><br/>
-			  <h5>Advanced Open Water Scuba Diver</h5>
-              <p><em>Professional Association of Diving Instructors (PADI)</em></p>
+              <h4><span id="scubaDivingTxtId"/></h4>
+              <h5><span id="scubaDivingPeriodTxtId"/></h5><br/>
+			  <h5><span id="scubaDivingRankTxtId"/></h5>
+              <p><em><span id="scubaDivingCertTxtId"/></em></p>
               <ul>
-                <li>As an active scuba diver of the Advance Group</li>
+                <li><span id="scubaDivingDescTxtId"/></li>
               </ul>
             </div>
             <div class="resume-item">
-              <h4>Swimming </h4>
+              <h4><span id="swimmingTxtId"/></h4>
               <h5>2018</h5><br/>
-			  <h5>Advance Group Active member</h5>
-              <p><em>Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL) </em></p>
+			  <h5><span id="swimmingRankTxtId"/></h5>
+              <p><em><span id="swimmingCollegeTxtId"/></em></p>
               <ul>
-                <li>As an active member of the Advance Group</li>
-                <li>Learn advanced swimming skills and rescueing skills</li>
-                <li>Help on training beginner groups weekly</li>
+                <li><span id="swimmingPointOneTxtId"/></li>
+                <li><span id="swimmingPointTwoTxtId"/></li>
+                <li><span id="swimmingPointThreeTxtId"/></li>
               </ul>
             </div>
 			<div class="resume-item">
-              <h4>Gymnasium  </h4>
+              <h4><span id="gymTxtId"/></h4>
               <h5>2017</h5></br>
-			  <h5>President</h5>
-              <p><em>Tunku Abdul Rahman College, Kuala Lumpur (TARC, KL) </em></p>
+			  <h5><span id="gymRankTxtId"/></h5>
+              <p><em><span id="gymCollegeTxtId"/></em></p>
               <ul>
-                <li>Leading a group of 60 TARC students that joined Gymnasium</li>
-                <li>Organized sport competitions, arrange sports activities for them to train on a weekly</li>
-                <li>Designed our own T-Shirt with Gymnasium logo on it</li>
+                <li><span id="gymPointOneTxtId"/></li>
+                <li><span id="gymPointTwoTxtId"/></li>
+                <li><span id="gymPointThreeTxtId"/></li>
               </ul>
             </div>
 			<div class="resume-item">
-              <h4>Mathematical Society  </h4>
+              <h4><span id="mathSocialTxtId"/></h4>
               <h5>2015</h5></br>
-			  <h5>President</h5>
-              <p><em>SMK Hillcrest, Selangor, Malaysia </em></p>
+			  <h5><span id="mathSocialRankTxtId"/></h5>
+              <p><em>SMK Hillcrest, Selangor, Malaysia</em></p>
               <ul>
-                <li>Leading a group of 50 members under the society</li>
-                <li>Organized a few activities such as hosting station games during school fairs and mathematical quiz during classes</li>
+                <li><span id="mathSocialPointOneTxtId"/></li>
+                <li><span id="mathSocialPointTwoTxtId"/></li>
               </ul>
             </div>
           </div>
@@ -711,15 +717,15 @@
               <div class="address">
 				<a href="https://www.google.com/maps?q=Batu+Caves" target="_blank"  >
 					<i class="bi bi-geo-alt"></i>
-					<h4>Location:</h4>
-					<p>Malaysia, China</p>
+					<h4><span id="locationFooterTxtId"/>:</h4>
+					<p><span id="locationFooterValueTxtId"/></p>
 				</a>
               </div>
 
               <div class="email">
 				<a href="mailto:jackychay@live.com" target="_blank"  >
 					<i class="bi bi-envelope"></i>
-					<h4>Email:</h4>
+					<h4><span id="emailFooterTxtId"/>:</h4>
 					<p>jackychay@live.com</p>
 				</a>
               </div>
@@ -727,8 +733,9 @@
               <div class="phone">
                 <a href="tel:+601111351951" target="_blank"  >
 					<i class="bi bi-phone"></i>
-					<h4>Call:</h4>
-					<p>+60 11-1135 1951</p>
+					<h4><span id="callFooterTxtId"/>:</h4>
+					<p>+60 11-1135 1951 (Malaysia, 马来西亚)</p>
+					<p>+86 130-6079 0218 (China, 中国)</p>
 				</a>
               </div>
 			  
@@ -754,6 +761,7 @@
   <footer id="footer">
     <div class="container">
       <h3>Chay Kun Wai, Jacky</h3>
+      <h3>谢官韦</h3>
       <!-- <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p> -->
       <div class="social-links">
         <!-- <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a> -->
@@ -797,6 +805,9 @@
   
   <!-- Custom JS files -->
   <script src="assets/js/custom.js"></script>
+    
+  <!-- Custom JS files -->
+  <script src="assets/js/translation.js"></script>
 
 </body>
 

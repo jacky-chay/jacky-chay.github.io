@@ -41,13 +41,7 @@ const languages = [
   "uk_UA"   // Index 35: Ukrainian (Ukraine)
 ];
 
-let currentLanguage = "en_US"; // Default language
-	
-// This method is to get the currentLocale	
-function getCurrentLocale() {
-  return currentLanguage; // Replace with your locale logic
-}
-	
+let currentLanguage = languages[0]; // Default language
 
 // This method is used to load the JSON file for translation
 function loadAndCacheJSONPromises(filename) {
@@ -100,11 +94,20 @@ function localizeText(data, locale) {
 	
 // Example using the Promises version
 function mainPromises() {
-  loadAndCacheJSONPromises('https://raw.githubusercontent.com/jacky-chay/filehost/refs/heads/main/translations.json')
+	
+	console.log("Current URL:", window.location.href);
+	console.log("Current Path:", window.location.pathname);
+	console.log("Current Protocol:", window.location.protocol);
+	console.log("Current Query Parameters:", window.location.search);
+
+
+	
+  // loadAndCacheJSONPromises('https://raw.githubusercontent.com/jacky-chay/filehost/refs/heads/main/translations.json')
+	loadAndCacheJSONPromises('assets/json/translations.json')
 	.then(myData => {
 		console.log("Data (Promises):", myData);
 		// Start localizing
-		localizeText(myData, getCurrentLocale());	
+		localizeText(myData, currentLanguage);	
 	})
 	.catch(error => {
 		console.log("Failed to load data (Promises):", error);

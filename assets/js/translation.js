@@ -41,40 +41,48 @@ const languages = [
   "uk_UA"   // Index 35: Ukrainian (Ukraine)
 ];
 
-let currentLanguage = languages[0]; // Default language
+let currentLanguage = languages[0]; // Default language en_US
 
-// This method is used to load the JSON file for translation
-function loadAndCacheJSONPromises(filename) {
-  return new Promise((resolve, reject) => {
-	// Check if the data is already in the cache
-	let cachedData = localStorage.getItem(filename);
+// This method is used to load the JSON file 
+let currentFilename = "";
 
-	// console.log("isCachedData: ", cachedData);
-	// if (cachedData) {
-	  // resolve(JSON.parse(cachedData)); // Parse back into a JavaScript object
-	  // return; // important to return here.
-	// }
-	// else{
-		// console.log(`Trying to load data to cache`);
-	// }
+const currentVersion = 1;
 
-	fetch(filename)
-	  .then(response => {
-		if (!response.ok) {
-		  throw new Error(`HTTP error! status: ${response.status}`);
-		}
-		return response.json();
-	  })
-	  .then(jsonData => {
-		localStorage.setItem(filename, JSON.stringify(jsonData));  // Stringify to store
-		resolve(jsonData);
-	  })
-	  .catch(error => {
-		console.error(`Error loading and caching JSON from ${filename}:`, error);
-		reject(error);
-	  });
-  });
-}
+function loadAndCacheJSONPromises(filename, version) {
+    return new Promise((resolve, reject) => {
+      const localStorageKey = `i18nData_v${version}`;
+      let cachedData = localStorage.getItem(localStorageKey);
+
+      if (cachedData) {
+        console.log(`Data loaded from localStorage (v${currentVersion})`);
+        resolve(JSON.parse(cachedData));
+        return;
+      }
+
+      // **Clear localStorage before fetching new data**
+      console.log("Clearing localStorage before update");
+      localStorage.clear(); // Clear everything.  USE WITH CAUTION!
+
+      fetch(filename)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(jsonData => {
+          localStorage.setItem(localStorageKey, JSON.stringify(jsonData)); // Save with the versioned key
+          localStorage.setItem("currentVersion", currentVersion);
+          console.log(`Data loaded from network and cached (v${currentVersion})`);
+          resolve(jsonData);
+        })
+        .catch(error => {
+          console.error(`Error loading and caching JSON from ${filename}:`, error);
+          reject(error);
+        });
+    });
+  }
+
 
 
 
@@ -95,15 +103,16 @@ function localizeText(data, locale) {
 // Example using the Promises version
 function mainPromises() {
 	
-	console.log("Current URL:", window.location.href);
-	console.log("Current Path:", window.location.pathname);
-	console.log("Current Protocol:", window.location.protocol);
-	console.log("Current Query Parameters:", window.location.search);
-
-
+	if(window.location.pathname.endsWith(".html")){
+		console.log("Running locally.");
+		currentFilename = 'https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/master/assets/json/translations.json';
+	}
+	else{
+		console.log("Running on a web server.");		
+		currentFilename = 'assets/json/translations.json';
+	}
 	
-  // loadAndCacheJSONPromises('https://raw.githubusercontent.com/jacky-chay/filehost/refs/heads/main/translations.json')
-	loadAndCacheJSONPromises('assets/json/translations.json')
+  loadAndCacheJSONPromises(currentFilename, currentVersion)
 	.then(myData => {
 		console.log("Data (Promises):", myData);
 		// Start localizing
@@ -113,8 +122,7 @@ function mainPromises() {
 		console.log("Failed to load data (Promises):", error);
 	});
 		
-}
-	
+}	
   
 
 function languageSelected() {
@@ -124,19 +132,16 @@ function languageSelected() {
   if (selectedValue) {
     // Do something with the selected language value
     console.log("Selected language code:", selectedValue);
-
-    // Example: You might want to store the selected language in localStorage
+	
     currentLanguage = selectedValue;
 
+	// Run main
 	mainPromises();
   } else {
-    console.log("No language selected.");
+    console.log("No language selected. Default using en_US");
     // Handle the case where no language is selected (e.g., the default "-- Select a Language --" option)
   }
 }
 
-
-  
-  
 
 mainPromises();

@@ -3,45 +3,42 @@
  */
  
 const languages = [
-  "en_US",  // Index 0: English (United States)
-  "en_GB",  // Index 1: English (United Kingdom)
-  "es_ES",  // Index 2: Spanish (Spain)
-  "es_MX",  // Index 3: Spanish (Mexico)
-  "fr_FR",  // Index 4: French (France)
-  "fr_CA",  // Index 5: French (Canada)
-  "de_DE",  // Index 6: German (Germany)
-  "it_IT",  // Index 7: Italian (Italy)
-  "ja_JP",  // Index 8: Japanese (Japan)
-  "zh_CN",  // Index 9: Chinese (China, Simplified)
-  "zh_TW",  // Index 10: Chinese (Taiwan, Traditional)
-  "ko_KR",  // Index 11: Korean (South Korea)
-  "pt_PT",  // Index 12: Portuguese (Portugal)
-  "pt_BR",  // Index 13: Portuguese (Brazil)
-  "ru_RU",  // Index 14: Russian (Russia)
-  "ar_SA",  // Index 15: Arabic (Saudi Arabia)
-  "nl_NL",  // Index 16: Dutch (Netherlands)
-  "sv_SE",  // Index 17: Swedish (Sweden)
-  "da_DK",  // Index 18: Danish (Denmark)
-  "no_NO",  // Index 19: Norwegian (Norway)
-  "fi_FI",  // Index 20: Finnish (Finland)
-  "pl_PL",  // Index 21: Polish (Poland)
-  "tr_TR",  // Index 22: Turkish (Turkey)
-  "el_GR",  // Index 23: Greek (Greece)
-  "he_IL",  // Index 24: Hebrew (Israel)
-  "id_ID",  // Index 25: Indonesian (Indonesia)
-  "vi_VN",  // Index 26: Vietnamese (Vietnam)
-  "th_TH",  // Index 27: Thai (Thailand)
-  "hi_IN",  // Index 28: Hindi (India)
-  "bn_BD",  // Index 29: Bengali (Bangladesh)
-  "sw_KE",  // Index 30: Swahili (Kenya)
-  "ro_RO",  // Index 31: Romanian (Romania)
-  "cs_CZ",  // Index 32: Czech (Czech Republic)
-  "sk_SK",  // Index 33: Slovak (Slovakia)
-  "hu_HU",  // Index 34: Hungarian (Hungary)
-  "uk_UA"   // Index 35: Ukrainian (Ukraine)
+  { code: "en_US", name: "English (United States)" },  // Index 0
+  { code: "zh_CN", name: "中文 (China)" },             // Index 1
+  { code: "es_ES", name: "Español (Spain)" },          // Index 2
+  { code: "fr_FR", name: "Français (France)" },         // Index 3
+  { code: "de_DE", name: "Deutsch (Germany)" },          // Index 4
+  { code: "it_IT", name: "Italiano (Italy)" },          // Index 5
+  { code: "ja_JP", name: "日本語 (Japan)" },           // Index 6
+  { code: "ko_KR", name: "한국어 (Korea)" },           // Index 7
+  { code: "pt_PT", name: "Português (Portugal)" },       // Index 8
+  { code: "ru_RU", name: "Русский (Russia)" },         // Index 9
+  { code: "ar_SA", name: "العربية (Saudi Arabia)" },       // Index 10
+  { code: "nl_NL", name: "Nederlands (Netherlands)" },    // Index 11
+  { code: "sv_SE", name: "Svenska (Sweden)" },          // Index 12
+  { code: "da_DK", name: "Dansk (Denmark)" },            // Index 13
+  { code: "no_NO", name: "Norsk (Norway)" },            // Index 14
+  { code: "fi_FI", name: "Suomi (Finland)" },            // Index 15
+  { code: "pl_PL", name: "Polski (Poland)" },            // Index 16
+  { code: "tr_TR", name: "Türkçe (Turkey)" },           // Index 17
+  { code: "el_GR", name: "Ελληνικά (Greece)" },         // Index 18
+  { code: "he_IL", name: 'עברית (Israel)' },           // Index 19
+  { code: "id_ID", name: "Bahasa Indonesia (Indonesia)" },  // Index 20
+  { code: "vi_VN", name: "Tiếng Việt (Vietnam)" },         // Index 21
+  { code: "th_TH", name: "ภาษาไทย (Thailand)" },          // Index 22
+  { code: "hi_IN", name: "हिन्दी (India)" },            // Index 23
+  { code: "bn_BD", name: "বাংলা (Bangladesh)" },            // Index 24
+  { code: "sw_KE", name: "Kiswahili (Kenya)" },        // Index 25
+  { code: "ro_RO", name: "Română (Romania)" },          // Index 26
+  { code: "cs_CZ", name: "Čeština (Czech Republic)" },    // Index 27
+  { code: "sk_SK", name: "Slovenčina (Slovakia)" },      // Index 28
+  { code: "hu_HU", name: "Magyar (Hungary)" },          // Index 29
+  { code: "uk_UA", name: "Українська (Ukraine)" },        // Index 30
 ];
 
-let currentLanguage = languages[0]; // Default language en_US
+
+
+let currentLanguage = languages[0].code; // Default language en_US
 
 // This method is used to load the JSON file 
 let currentFilename = "";
@@ -124,6 +121,19 @@ function mainPromises() {
 		
 }	
   
+  
+// This populates the language dropdown list according to the languages variable
+function populateLanguageSelect() {
+  const languageSelect = document.getElementById("languageSelect");
+
+  languages.forEach(language => {
+    const option = document.createElement("option");
+    option.value = language.code; // Use language.code as the value
+    option.textContent = language.name; // Use language.name as the display text
+    languageSelect.appendChild(option);
+  });
+}
+ 
 
 function languageSelected() {
   const selectElement = document.getElementById("languageSelect");
@@ -143,5 +153,5 @@ function languageSelected() {
   }
 }
 
-
+window.onload = populateLanguageSelect;
 mainPromises();

@@ -135,21 +135,25 @@
     });
   }
 
+// This method has brought over to translation.js due to customization and code optimization so the effect will be under control
   /**
    * Hero type effect
    */
-  const typed = select('.typed')
-  if (typed) {
-    let typed_strings = typed.getAttribute('data-typed-items')
-    typed_strings = typed_strings.split(',')
-    new Typed('.typed', {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 20,
-      backSpeed: 30,
-      backDelay: 1000
-    });
-  }
+  // const typed = select('.typed')
+  // if (typed) {
+    // let typed_strings = typed.getAttribute('data-typed-items')
+	// if (typed_strings){
+		// typed_strings = typed_strings.split(',')
+		// new Typed('.typed', {
+		  // strings: typed_strings,
+		  // loop: true,
+		  // typeSpeed: 20,
+		  // backSpeed: 30,
+		  // backDelay: 1000
+		// });
+	// }
+    
+  // }
 
   /**
    * Skills animation

@@ -2968,5 +2968,13 @@
         "sk_SK": "Volaj",
         "hu_HU": "Hívás",
         "uk_UA": "Дзвінок"
-    }
+    },
+	"heroSelectionBeginTxtId": {
+		"en_US": "I'm a"
+		"zh_CN": "我是"
+	},
+	"heroSelectionDataTypedTxtId": {
+		"en_US": "Founder / Director of Sirius Lab, Software System Developer, NetEast Business Partner, Scuba Diver"
+		"zh_CN": "啊啊啊, 叭叭叭"
+	}
 }

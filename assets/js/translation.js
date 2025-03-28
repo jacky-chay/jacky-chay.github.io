@@ -2,7 +2,7 @@
  * This JavaScript file, for translation purposes
  */
  
-const currentVersion = 2;
+const currentVersion = 3;
 
 const languages = [
   { code: "en_US", name: "English (United States)" },  // Index 0
@@ -80,16 +80,38 @@ function loadAndCacheJSONPromises(filename, version) {
     });
   }
 
-
-
-
 // This is the main method that do the localization job	
 function localizeText(data, locale) {
 	
 	console.log(`${locale} is selected for showing language`);
 	
 	for (const key in data) {		
-		const elementToTranslate = document.getElementById(key);		
+		const elementToTranslate = document.getElementById(key);
+
+		if(elementToTranslate && key == "heroSelectionDataTypedTxtId"){
+			elementToTranslate.setAttribute('data-typed-items', data[key][locale]);
+			
+		  
+			// Get the strings from the element
+			let typed_strings = elementToTranslate.getAttribute('data-typed-items').split(',');
+
+			// Destroy the previous instance, if it exists
+			if (elementToTranslate.typedEffect) {
+				elementToTranslate.typedEffect.destroy();
+				elementToTranslate.typedEffect = null; // Clear the property
+			}
+
+			// Create and store the Typed instance directly on the element
+			elementToTranslate.typedEffect = new Typed(elementToTranslate, { // Pass the element
+				strings: typed_strings,
+				loop: true,
+				typeSpeed: 20,
+				backSpeed: 30,
+				backDelay: 1000
+			});
+			
+			continue;
+		}
 		if(elementToTranslate){
 			elementToTranslate.textContent = data[key][locale];		
 		}
@@ -152,6 +174,10 @@ function languageSelected() {
     // Handle the case where no language is selected (e.g., the default "-- Select a Language --" option)
   }
 }
+
+
+
+
 
 window.onload = populateLanguageSelect;
 mainPromises();

@@ -57,7 +57,7 @@ function loadAndCacheJSONPromises(filename, version) {
       }
 
       // **Clear localStorage before fetching new data**
-      console.log("Clearing localStorage before update");
+      console.debug("Clearing localStorage before update");
       localStorage.clear(); // Clear everything.  USE WITH CAUTION!
 
       fetch(filename)
@@ -101,22 +101,22 @@ function localizeText(data, locale) {
 function mainPromises() {
 	
 	if(window.location.pathname.endsWith(".html")){
-		console.log("Running locally.");
+		console.debug("Running locally.");
 		currentFilename = 'https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/master/assets/json/translations.json';
 	}
 	else{
-		console.log("Running on a web server.");		
+		console.debug("Running on a web server.");		
 		currentFilename = 'assets/json/translations.json';
 	}
 	
   loadAndCacheJSONPromises(currentFilename, currentVersion)
 	.then(myData => {
-		console.log("Data (Promises):", myData);
+		console.debug("Data (Promises):", myData);
 		// Start localizing
 		localizeText(myData, currentLanguage);	
 	})
 	.catch(error => {
-		console.log("Failed to load data (Promises):", error);
+		console.error("Failed to load data (Promises):", error);
 	});
 		
 }	

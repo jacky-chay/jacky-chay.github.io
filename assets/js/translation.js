@@ -2,6 +2,8 @@
  * This JavaScript file, for translation purposes
  */
  
+const currentVersion = 2;
+
 const languages = [
   { code: "en_US", name: "English (United States)" },  // Index 0
   { code: "zh_CN", name: "中文 (China)" },             // Index 1
@@ -42,8 +44,6 @@ let currentLanguage = languages[0].code; // Default language en_US
 
 // This method is used to load the JSON file 
 let currentFilename = "";
-
-const currentVersion = 1;
 
 function loadAndCacheJSONPromises(filename, version) {
     return new Promise((resolve, reject) => {

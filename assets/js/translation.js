@@ -100,11 +100,12 @@ function localizeText(data, locale) {
 	
 // Example using the Promises version
 function mainPromises() {
-  loadAndCacheJSONPromises('https://raw.githubusercontent.com/jacky-chay/filehost/refs/heads/main/translations.json')  
+  // loadAndCacheJSONPromises('https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/refs/heads/master/assets/json/translations.json')  
+  loadAndCacheJSONPromises('../json/translations.json')  
 	.then(myData => {
 		console.log("Data (Promises):", myData);
 		// Start localizing
-		localizeText(myData, getCurrentLocale());
+		localizeText(myData, getCurrentLocale());	
 	})
 	.catch(error => {
 		console.log("Failed to load data (Promises):", error);

@@ -2,7 +2,6 @@
 ### Hosted By Github
 ### Version 1.0 Customized
 
-[Hosted on GitHub Pages](https://jacky-chay.github.io/){:target="_blank" rel="noopener"}
 
 Hosted on GitHub Pages - https://jacky-chay.github.io/
 

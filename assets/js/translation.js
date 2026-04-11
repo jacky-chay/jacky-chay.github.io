@@ -1,8 +1,8 @@
 /**
  * This JavaScript file, for translation purposes
  */
- 
-const currentVersion = 3;
+
+const currentVersion = 4;
 
 const languages = [
   { code: "en_US", name: "English (United States)" },  // Index 0
@@ -46,104 +46,104 @@ let currentLanguage = languages[0].code; // Default language en_US
 let currentFilename = "";
 
 function loadAndCacheJSONPromises(filename, version) {
-    return new Promise((resolve, reject) => {
-      const localStorageKey = `i18nData_v${version}`;
-      let cachedData = localStorage.getItem(localStorageKey);
+  return new Promise((resolve, reject) => {
+    const localStorageKey = `i18nData_v${version}`;
+    let cachedData = localStorage.getItem(localStorageKey);
 
-      if (cachedData) {
-        console.log(`Data loaded from localStorage (v${currentVersion})`);
-        resolve(JSON.parse(cachedData));
-        return;
-      }
+    if (cachedData) {
+      console.log(`Data loaded from localStorage (v${currentVersion})`);
+      resolve(JSON.parse(cachedData));
+      return;
+    }
 
-      // **Clear localStorage before fetching new data**
-      console.debug("Clearing localStorage before update");
-      localStorage.clear(); // Clear everything.  USE WITH CAUTION!
+    // **Clear localStorage before fetching new data**
+    console.debug("Clearing localStorage before update");
+    localStorage.clear(); // Clear everything.  USE WITH CAUTION!
 
-      fetch(filename)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(jsonData => {
-          localStorage.setItem(localStorageKey, JSON.stringify(jsonData)); // Save with the versioned key
-          localStorage.setItem("currentVersion", currentVersion);
-          console.log(`Data loaded from network and cached (v${currentVersion})`);
-          resolve(jsonData);
-        })
-        .catch(error => {
-          console.error(`Error loading and caching JSON from ${filename}:`, error);
-          reject(error);
-        });
-    });
-  }
+    fetch(filename)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(jsonData => {
+        localStorage.setItem(localStorageKey, JSON.stringify(jsonData)); // Save with the versioned key
+        localStorage.setItem("currentVersion", currentVersion);
+        console.log(`Data loaded from network and cached (v${currentVersion})`);
+        resolve(jsonData);
+      })
+      .catch(error => {
+        console.error(`Error loading and caching JSON from ${filename}:`, error);
+        reject(error);
+      });
+  });
+}
 
 // This is the main method that do the localization job	
 function localizeText(data, locale) {
-	
-	console.log(`${locale} is selected for showing language`);
-	
-	for (const key in data) {		
-		const elementToTranslate = document.getElementById(key);
 
-		if(elementToTranslate && key == "heroSelectionDataTypedTxtId"){
-			elementToTranslate.setAttribute('data-typed-items', data[key][locale]);
-			
-		  
-			// Get the strings from the element
-			let typed_strings = elementToTranslate.getAttribute('data-typed-items').split(',');
+  console.log(`${locale} is selected for showing language`);
 
-			// Destroy the previous instance, if it exists
-			if (elementToTranslate.typedEffect) {
-				elementToTranslate.typedEffect.destroy();
-				elementToTranslate.typedEffect = null; // Clear the property
-			}
+  for (const key in data) {
+    const elementToTranslate = document.getElementById(key);
 
-			// Create and store the Typed instance directly on the element
-			elementToTranslate.typedEffect = new Typed(elementToTranslate, { // Pass the element
-				strings: typed_strings,
-				loop: true,
-				typeSpeed: 20,
-				backSpeed: 30,
-				backDelay: 1000
-			});
-			
-			continue;
-		}
-		if(elementToTranslate){
-			elementToTranslate.textContent = data[key][locale];		
-		}
-	}
+    if (elementToTranslate && key == "heroSelectionDataTypedTxtId") {
+      elementToTranslate.setAttribute('data-typed-items', data[key][locale]);
+
+
+      // Get the strings from the element
+      let typed_strings = elementToTranslate.getAttribute('data-typed-items').split(',');
+
+      // Destroy the previous instance, if it exists
+      if (elementToTranslate.typedEffect) {
+        elementToTranslate.typedEffect.destroy();
+        elementToTranslate.typedEffect = null; // Clear the property
+      }
+
+      // Create and store the Typed instance directly on the element
+      elementToTranslate.typedEffect = new Typed(elementToTranslate, { // Pass the element
+        strings: typed_strings,
+        loop: true,
+        typeSpeed: 20,
+        backSpeed: 30,
+        backDelay: 1000
+      });
+
+      continue;
+    }
+    if (elementToTranslate) {
+      elementToTranslate.textContent = data[key][locale];
+    }
+  }
 }
-	
-	
+
+
 // Example using the Promises version
 function mainPromises() {
-	
-	if(window.location.pathname.endsWith(".html")){
-		console.debug("Running locally.");
-		currentFilename = 'https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/master/assets/json/translations.json';
-	}
-	else{
-		console.debug("Running on a web server.");		
-		currentFilename = 'assets/json/translations.json';
-	}
-	
+
+  if (window.location.pathname.endsWith(".html")) {
+    console.debug("Running locally.");
+  }
+  else {
+    console.debug("Running on a web server.");
+  }
+  currentFilename = 'https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/master/assets/json/translations.json';
+
+
   loadAndCacheJSONPromises(currentFilename, currentVersion)
-	.then(myData => {
-		console.debug("Data (Promises):", myData);
-		// Start localizing
-		localizeText(myData, currentLanguage);	
-	})
-	.catch(error => {
-		console.error("Failed to load data (Promises):", error);
-	});
-		
-}	
-  
-  
+    .then(myData => {
+      console.debug("Data (Promises):", myData);
+      // Start localizing
+      localizeText(myData, currentLanguage);
+    })
+    .catch(error => {
+      console.error("Failed to load data (Promises):", error);
+    });
+
+}
+
+
 // This populates the language dropdown list according to the languages variable
 function populateLanguageSelect() {
   const languageSelect = document.getElementById("languageSelect");
@@ -155,7 +155,7 @@ function populateLanguageSelect() {
     languageSelect.appendChild(option);
   });
 }
- 
+
 
 function languageSelected() {
   const selectElement = document.getElementById("languageSelect");
@@ -164,11 +164,11 @@ function languageSelected() {
   if (selectedValue) {
     // Do something with the selected language value
     console.log("Selected language code:", selectedValue);
-	
+
     currentLanguage = selectedValue;
 
-	// Run main
-	mainPromises();
+    // Run main
+    mainPromises();
   } else {
     console.log("No language selected. Default using en_US");
     // Handle the case where no language is selected (e.g., the default "-- Select a Language --" option)

@@ -2,7 +2,7 @@
  * This JavaScript file, for translation purposes
  */
 
-const currentVersion = 4;
+const currentVersion = 1;
 
 const languages = [
   { code: "en_US", name: "English (United States)" },  // Index 0
@@ -122,13 +122,17 @@ function localizeText(data, locale) {
 // Example using the Promises version
 function mainPromises() {
 
-  if (window.location.pathname.endsWith(".html")) {
-    console.debug("Running locally.");
+  const isLocalServer = window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+
+  if (isLocalServer) {
+    console.debug("Running on local server. Using local translation file.");
+    currentFilename = 'assets/json/translations.json';
   }
   else {
-    console.debug("Running on a web server.");
+    console.debug("Running on web or via file protocol. Using remote translation file.");
+    currentFilename = 'https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/master/assets/json/translations.json';
   }
-  currentFilename = 'https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/master/assets/json/translations.json';
 
 
   loadAndCacheJSONPromises(currentFilename, currentVersion)

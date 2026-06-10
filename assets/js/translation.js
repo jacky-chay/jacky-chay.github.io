@@ -2,7 +2,7 @@
  * This JavaScript file, for translation purposes
  */
 
-const currentVersion = 9;
+const currentVersion = 10;
 
 const languages = [
   { code: "en_US", name: "English (United States)" },  // Index 0

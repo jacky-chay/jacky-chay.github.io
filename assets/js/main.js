@@ -130,9 +130,19 @@
    */
   let preloader = select('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove()
-    });
+    const removePreloader = () => {
+      if (preloader.parentNode) {
+        preloader.remove();
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      removePreloader();
+    } else {
+      window.addEventListener('load', removePreloader);
+      // Safety backup: Remove loader after 2.5 seconds regardless of resource states
+      setTimeout(removePreloader, 2500);
+    }
   }
 
 // This method has brought over to translation.js due to customization and code optimization so the effect will be under control

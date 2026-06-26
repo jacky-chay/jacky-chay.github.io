@@ -1,19 +1,3 @@
-(function() {
-  let themeMode = localStorage.getItem("themeMode");
-  let stylesheetLink = document.createElement("link");
-  stylesheetLink.rel = "stylesheet";
-
-  if (themeMode === "1") {
-	stylesheetLink.href = "assets/css/styleDark.css";
-  } else {
-	stylesheetLink.href = "assets/css/style.css";
-  }
-
-  document.head.appendChild(stylesheetLink);
-})();
-	
-	
-	
 // Get a reference to the button element
 const lightThemeButton = document.getElementById("light-theme-button");
 const darkThemeButton = document.getElementById("dark-theme-button");

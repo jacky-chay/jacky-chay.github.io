@@ -122,16 +122,13 @@ function localizeText(data, locale) {
 // Example using the Promises version
 function mainPromises() {
 
-  const isLocalServer = window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
-
-  if (isLocalServer) {
-    console.debug("Running on local server. Using local translation file.");
-    currentFilename = 'assets/json/translations.json';
+  if (window.location.protocol === 'file:') {
+    console.debug("Running locally as a raw file (file://). Using GitHub Raw backup.");
+    currentFilename = 'https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/master/assets/json/translations.json';
   }
   else {
-    console.debug("Running on web or via file protocol. Using remote translation file.");
-    currentFilename = 'https://raw.githubusercontent.com/jacky-chay/jacky-chay.github.io/master/assets/json/translations.json';
+    console.debug("Running on a web server (live or local dev server). Using local path.");
+    currentFilename = 'assets/json/translations.json';
   }
 
 

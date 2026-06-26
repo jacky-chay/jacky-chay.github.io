@@ -27,7 +27,16 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <!-- Template Main CSS File being moved to by dynamically generated from themeMode.js-->
+  <!-- Template Main CSS File dynamically generated from themeMode.js to prevent FOUC -->
+  <script>
+    (function() {
+      let themeMode = localStorage.getItem("themeMode");
+      let stylesheetLink = document.createElement("link");
+      stylesheetLink.rel = "stylesheet";
+      stylesheetLink.href = themeMode === "1" ? "assets/css/styleDark.css" : "assets/css/style.css";
+      document.head.appendChild(stylesheetLink);
+    })();
+  </script>
 
 </head>
 
@@ -969,30 +978,30 @@
       class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/purecounter/purecounter.js" defer></script>
+  <script src="assets/vendor/aos/aos.js" defer></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js" defer></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js" defer></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js" defer></script>
+  <script src="assets/vendor/typed.js/typed.min.js" defer></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js" defer></script>
+  <script src="assets/vendor/php-email-form/validate.js" defer></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js" defer></script>
 
   <!-- Custom JS files -->
-  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/custom.js" defer></script>
 
   <!-- Translation JS files -->
-  <script src="assets/js/translation.js"></script>
+  <script src="assets/js/translation.js" defer></script>
 
-  <!-- Translation JS files -->
-  <script src="assets/js/themeMode.js"></script>
+  <!-- Theme Mode JS files -->
+  <script src="assets/js/themeMode.js" defer></script>
 
   <!-- WechatClickFunction JS files -->
-  <script src="assets/js/wechatIconClick.js"></script>
+  <script src="assets/js/wechatIconClick.js" defer></script>
 
 </body>
 

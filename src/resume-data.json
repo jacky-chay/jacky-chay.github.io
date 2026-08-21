@@ -1,0 +1,795 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "lastVerified": "2026-08-21",
+    "translationReview": "pending-native-review",
+    "defaultVariant": "backend",
+    "defaultLanguage": "en"
+  },
+  "factControls": {
+    "identity": "verified",
+    "contact": "verified",
+    "employmentRelationships": "verified",
+    "employmentDates": "verified",
+    "technologies": "verified",
+    "outcomes": "qualitative-only",
+    "customerNames": "anonymized-until-approved",
+    "aiPrototype": "private-unreleased-needs-evidence"
+  },
+  "profile": {
+    "legalName": "Chay Kun Wai",
+    "displayName": {
+      "en": "Chay Kun Wai (Jacky)",
+      "zh": "谢官韦（Jacky）"
+    },
+    "shortName": "CKW",
+    "email": "jackychay@live.com",
+    "phone": "+60 11-1135 1951",
+    "phoneHref": "tel:+601111351951",
+    "linkedinLabel": "linkedin.com/in/chay-kun-wai-jacky-75a638233",
+    "linkedinUrl": "https://www.linkedin.com/in/chay-kun-wai-jacky-75a638233/",
+    "portfolioLabel": "jacky-chay.github.io",
+    "portfolioUrl": "https://jacky-chay.github.io/",
+    "location": {
+      "en": "Malaysia-based",
+      "zh": "常驻马来西亚"
+    },
+    "relocation": {
+      "en": "Open to relocate to Singapore",
+      "zh": "愿意迁居新加坡"
+    },
+    "travel": {
+      "en": "Open to frequent worldwide travel",
+      "zh": "可接受频繁全球出差"
+    },
+    "languages": [
+      {
+        "name": {
+          "en": "English",
+          "zh": "英语"
+        },
+        "level": {
+          "en": "Fluent",
+          "zh": "流利"
+        }
+      },
+      {
+        "name": {
+          "en": "Mandarin",
+          "zh": "普通话"
+        },
+        "level": {
+          "en": "Fluent",
+          "zh": "流利"
+        }
+      },
+      {
+        "name": {
+          "en": "Cantonese",
+          "zh": "粤语"
+        },
+        "level": {
+          "en": "Fluent",
+          "zh": "流利"
+        }
+      },
+      {
+        "name": {
+          "en": "Malay",
+          "zh": "马来语"
+        },
+        "level": {
+          "en": "Fluent",
+          "zh": "流利"
+        }
+      }
+    ]
+  },
+  "variants": {
+    "backend": {
+      "title": {
+        "en": "Backend Lead Engineer & Technical Lead",
+        "zh": "后端主导工程师与技术负责人"
+      },
+      "resumeTitle": "Backend Lead Engineer | Technical Lead",
+      "summary": {
+        "en": "Backend lead engineer and hands-on technical lead with 6+ years delivering Java-based warehouse automation systems from offices and customer sites in Malaysia and China. Experienced across customer requirements, system design, implementation, testing, commissioning, code review, and engineer mentoring. Open to relocate to Singapore and frequent international travel.",
+        "zh": "拥有 6 年以上经验的后端主导工程师及一线技术负责人，长期在马来西亚和中国的办公室及客户现场交付基于 Java 的仓储自动化系统。具备从客户需求、系统设计、开发与测试，到现场上线、代码审查及工程师辅导的端到端经验，愿意迁居新加坡并接受频繁国际出差。"
+      },
+      "heroSummary": {
+        "en": "Backend lead engineer and hands-on technical lead with 6+ years delivering Java and SQL-backed warehouse automation systems. Worked from Midea's China office and customer sites, translating operational requirements into technical designs, implementation plans, testing, commissioning, and engineer mentoring. Open to relocate to Singapore and frequent worldwide travel.",
+        "zh": "拥有 6 年以上经验的后端主导工程师及一线技术负责人，交付基于 Java 和 SQL 的仓储自动化系统。曾在美的中国办公室及客户现场工作，把运营需求转化为技术设计、实施计划、测试、上线调试及工程师辅导，愿意迁居新加坡并接受频繁国际出差。"
+      },
+      "skillGroups": [
+        {
+          "title": {
+            "en": "Core engineering",
+            "zh": "核心工程"
+          },
+          "items": [
+            "Java",
+            "SQL",
+            "JPA",
+            "JSP"
+          ]
+        },
+        {
+          "title": {
+            "en": "Data platforms",
+            "zh": "数据平台"
+          },
+          "items": [
+            "Oracle Database",
+            "SQL Server",
+            "PostgreSQL",
+            "MySQL"
+          ]
+        },
+        {
+          "title": {
+            "en": "Delivery practices",
+            "zh": "交付实践"
+          },
+          "items": [
+            "System design",
+            "Requirements / SRS",
+            "Testing and debugging",
+            "Code review"
+          ]
+        },
+        {
+          "title": {
+            "en": "Domain and leadership",
+            "zh": "领域与技术领导"
+          },
+          "items": [
+            "Warehouse automation",
+            "Commissioning",
+            "Mentoring",
+            "Technical interviews"
+          ]
+        }
+      ]
+    },
+    "fde": {
+      "title": {
+        "en": "Customer-Facing Technical Lead & Software Engineer",
+        "zh": "客户交付型技术负责人与软件工程师"
+      },
+      "resumeTitle": "Forward-Deployed Engineer | Technical Lead",
+      "summary": {
+        "en": "Customer-facing technical lead and software engineer with 6+ years translating operational requirements into production warehouse automation systems across APAC. Combines on-site discovery, technical scoping, hands-on Java delivery, commissioning, code review, mentoring, and multilingual stakeholder communication. Open to relocate to Singapore and frequent international travel.",
+        "zh": "拥有 6 年以上经验的客户交付型技术负责人及软件工程师，擅长把亚太区客户的运营需求转化为正式运行的仓储自动化系统。具备现场需求调研、技术范围界定、Java 开发、上线调试、代码审查、工程师辅导及多语言沟通经验，愿意迁居新加坡并接受频繁国际出差。"
+      },
+      "heroSummary": {
+        "en": "Customer-facing technical lead and software engineer with 6+ years translating operational requirements into warehouse automation systems across APAC. Combines China-based customer discovery, technical scoping, hands-on Java delivery, commissioning, code review, mentoring, and multilingual stakeholder communication. Open to relocate to Singapore and frequent worldwide travel.",
+        "zh": "拥有 6 年以上经验的客户交付型技术负责人及软件工程师，擅长把亚太区运营需求转化为仓储自动化系统。结合中国客户现场需求调研、技术范围界定、Java 开发、上线调试、代码审查、工程师辅导及多语言沟通，愿意迁居新加坡并接受频繁国际出差。"
+      },
+      "skillGroups": [
+        {
+          "title": {
+            "en": "Customer delivery",
+            "zh": "客户交付"
+          },
+          "items": [
+            "Customer workshops",
+            "Requirements / SRS",
+            "Technical scoping",
+            "Commissioning"
+          ]
+        },
+        {
+          "title": {
+            "en": "Hands-on engineering",
+            "zh": "一线工程"
+          },
+          "items": [
+            "Java",
+            "SQL",
+            "System design",
+            "Testing and debugging",
+            "RAG prototyping"
+          ]
+        },
+        {
+          "title": {
+            "en": "Technical leadership",
+            "zh": "技术领导"
+          },
+          "items": [
+            "Code review",
+            "Mentoring",
+            "Technical interviews",
+            "Delivery risk coordination"
+          ]
+        },
+        {
+          "title": {
+            "en": "APAC collaboration",
+            "zh": "亚太区协作"
+          },
+          "items": [
+            "English",
+            "Mandarin",
+            "Cantonese",
+            "Malay"
+          ]
+        }
+      ]
+    }
+  },
+  "highlights": [
+    {
+      "value": {
+        "en": "6+ years",
+        "zh": "6 年以上"
+      },
+      "label": {
+        "en": "Enterprise software delivery",
+        "zh": "企业软件交付经验"
+      }
+    },
+    {
+      "value": {
+        "en": "Java + SQL",
+        "zh": "Java + SQL"
+      },
+      "label": {
+        "en": "Backend systems",
+        "zh": "后端系统"
+      }
+    },
+    {
+      "value": {
+        "en": "China-based delivery",
+        "zh": "中国交付经验"
+      },
+      "label": {
+        "en": "Midea office and customer sites",
+        "zh": "美的办公室及客户现场"
+      }
+    },
+    {
+      "value": {
+        "en": "4 languages",
+        "zh": "4 种语言"
+      },
+      "label": {
+        "en": "English, Mandarin, Cantonese, Malay",
+        "zh": "英语、普通话、粤语、马来语"
+      }
+    }
+  ],
+  "experience": [
+    {
+      "id": "midea",
+      "status": "verified",
+      "company": {
+        "en": "Midea Group",
+        "zh": "美的集团"
+      },
+      "relationship": "direct-employment",
+      "title": {
+        "en": "Backend Lead Engineer (Technical Lead)",
+        "zh": "后端主导工程师（Technical Lead）"
+      },
+      "location": {
+        "en": "China office and customer sites",
+        "zh": "中国办公室及客户现场"
+      },
+      "start": "2024-12",
+      "end": "2026-07",
+      "technologies": [
+        "Java",
+        "SQL",
+        "Warehouse automation"
+      ],
+      "bullets": [
+        {
+          "id": "midea-discovery",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 2,
+            "fde": 1
+          },
+          "text": {
+            "en": "Led backend design and delivery across concurrent warehouse automation programs, translating on-site customer workflows into SRS documents, technical designs, and implementation plans.",
+            "zh": "主导多个仓储自动化项目的后端设计与交付，把现场客户流程转化为软件需求规格、技术设计及实施计划。"
+          }
+        },
+        {
+          "id": "midea-build",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 1,
+            "fde": 2
+          },
+          "text": {
+            "en": "Designed and implemented core system features while reviewing code and aligning contributors with shared engineering standards.",
+            "zh": "设计并实现系统核心功能，同时进行代码审查，推动参与工程师遵循统一的开发标准。"
+          }
+        },
+        {
+          "id": "midea-mentoring",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 4,
+            "fde": 4
+          },
+          "text": {
+            "en": "Guided new engineers through warehouse-domain concepts, development setup, and delivery practices; participated in technical interviews.",
+            "zh": "指导新工程师掌握仓储领域知识、开发环境及交付规范，并参与技术面试。"
+          }
+        },
+        {
+          "id": "midea-delivery",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 3,
+            "fde": 3
+          },
+          "text": {
+            "en": "Coordinated technical scope, engineering capacity, dependencies, and delivery risks with customer and internal stakeholders.",
+            "zh": "与客户及内部团队协调技术范围、工程资源、依赖关系及交付风险。"
+          }
+        },
+        {
+          "id": "midea-knowledge",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 5,
+            "fde": 5
+          },
+          "text": {
+            "en": "Worked from Midea's China office and customer sites throughout the assignment, partnering directly with local stakeholders during discovery, implementation, and delivery readiness.",
+            "zh": "在整个任职期间常驻美的中国办公室及客户现场，并在需求调研、开发实施和交付准备阶段与当地相关方直接协作。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "swisslog",
+      "status": "verified",
+      "company": {
+        "en": "Swisslog Malaysia Sdn. Bhd.",
+        "zh": "Swisslog Malaysia Sdn. Bhd."
+      },
+      "relationship": "direct-employment",
+      "title": {
+        "en": "Software Application Engineer",
+        "zh": "软件应用工程师"
+      },
+      "location": {
+        "en": "Malaysia office and regional customer sites",
+        "zh": "马来西亚办公室及区域客户现场"
+      },
+      "start": "2020-02",
+      "end": "2024-12",
+      "technologies": [
+        "Java",
+        "SQL",
+        "Oracle Database",
+        "SQL Server",
+        "Warehouse automation"
+      ],
+      "bullets": [
+        {
+          "id": "swisslog-modules",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 1,
+            "fde": 2
+          },
+          "text": {
+            "en": "Built and maintained Java modules supporting receiving, putaway, cycle-count, inventory, and infeed/outfeed workflows across warehouse automation deployments.",
+            "zh": "开发并维护 Java 模块，支持多个仓储自动化项目中的收货、上架、循环盘点、库存及入库/出库流程。"
+          }
+        },
+        {
+          "id": "swisslog-testing",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 2,
+            "fde": 3
+          },
+          "text": {
+            "en": "Owned test planning and defect investigation for deployments serving global retail customers, collaborating with engineering and site teams through production readiness.",
+            "zh": "负责全球零售客户项目的测试规划与缺陷调查，并与工程及现场团队协作完成上线准备。"
+          }
+        },
+        {
+          "id": "swisslog-delivery",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 3,
+            "fde": 1
+          },
+          "text": {
+            "en": "Led module delivery for beverage-manufacturing and secure-printing facilities, from requirements analysis through implementation and commissioning support.",
+            "zh": "主导饮料制造及安全印刷设施的功能模块交付，覆盖需求分析、开发实施及现场上线支持。"
+          }
+        },
+        {
+          "id": "swisslog-commissioning",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 4,
+            "fde": 4
+          },
+          "text": {
+            "en": "Supported international project commissioning in China, working on site with stakeholders to investigate issues and prepare systems for operational use.",
+            "zh": "参与中国项目的国际现场上线，与相关人员在现场排查问题并推动系统投入运营。"
+          }
+        },
+        {
+          "id": "swisslog-mentoring",
+          "status": "verified",
+          "variants": [
+            "backend",
+            "fde"
+          ],
+          "priority": {
+            "backend": 5,
+            "fde": 5
+          },
+          "text": {
+            "en": "Mentored new engineers on development setup, warehouse fundamentals, debugging, and the software delivery lifecycle.",
+            "zh": "辅导新工程师完成开发环境配置，并掌握仓储基础、调试方法及软件交付流程。"
+          }
+        }
+      ]
+    }
+  ],
+  "caseStudies": [
+    {
+      "id": "workflow-engineering",
+      "status": "verified",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "title": {
+        "en": "Warehouse workflow engineering",
+        "zh": "仓储流程工程"
+      },
+      "summary": {
+        "en": "Designed Java application logic for receiving, putaway, cycle-count, inventory, and material-flow workflows across enterprise warehouse automation environments.",
+        "zh": "为企业仓储自动化环境中的收货、上架、循环盘点、库存及物料流转流程设计 Java 应用逻辑。"
+      }
+    },
+    {
+      "id": "customer-delivery",
+      "status": "verified",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "title": {
+        "en": "Customer-led technical delivery",
+        "zh": "以客户为中心的技术交付"
+      },
+      "summary": {
+        "en": "Translated customer operations into SRS documents and technical designs, then coordinated implementation, delivery risks, and readiness with engineering and site teams.",
+        "zh": "把客户运营流程转化为软件需求规格与技术设计，并与工程及现场团队协调开发实施、交付风险和上线准备。"
+      }
+    },
+    {
+      "id": "quality-readiness",
+      "status": "verified",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "title": {
+        "en": "Quality and production readiness",
+        "zh": "质量与上线准备"
+      },
+      "summary": {
+        "en": "Planned functional testing, investigated defects, reviewed code quality, and supported commissioning as automation modules moved into operational use.",
+        "zh": "规划功能测试、调查缺陷、审查代码质量，并在自动化模块投入运营时支持现场上线。"
+      }
+    }
+  ],
+  "deliveryCoverage": [
+    {
+      "id": "requirements-design",
+      "status": "verified",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "priority": {
+        "backend": 2,
+        "fde": 1
+      },
+      "title": {
+        "en": "Requirements and technical design",
+        "zh": "需求与技术设计"
+      },
+      "summary": {
+        "en": "Translate customer workshops and warehouse workflows into SRS documents, system boundaries, technical designs, and implementation plans.",
+        "zh": "把客户研讨及仓储流程转化为软件需求规格、系统边界、技术设计和实施计划。"
+      }
+    },
+    {
+      "id": "implementation",
+      "status": "verified",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "priority": {
+        "backend": 1,
+        "fde": 3
+      },
+      "title": {
+        "en": "Backend implementation",
+        "zh": "后端开发实施"
+      },
+      "summary": {
+        "en": "Design and maintain Java application modules for inventory and material-flow workflows backed by SQL databases.",
+        "zh": "为库存及物料流转流程设计并维护由 SQL 数据库支持的 Java 应用模块。"
+      }
+    },
+    {
+      "id": "quality-readiness",
+      "status": "verified",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "priority": {
+        "backend": 3,
+        "fde": 4
+      },
+      "title": {
+        "en": "Testing and operational readiness",
+        "zh": "测试与运营准备"
+      },
+      "summary": {
+        "en": "Plan functional tests, investigate defects, review code quality, and support commissioning into live warehouse operations.",
+        "zh": "规划功能测试、调查缺陷、审查代码质量，并支持软件进入仓库实际运营。"
+      }
+    },
+    {
+      "id": "technical-leadership",
+      "status": "verified",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "priority": {
+        "backend": 4,
+        "fde": 2
+      },
+      "title": {
+        "en": "Technical leadership and delivery coordination",
+        "zh": "技术领导与交付协调"
+      },
+      "summary": {
+        "en": "Review code, mentor engineers, and coordinate capacity, dependencies, blockers, and readiness with customer and delivery teams.",
+        "zh": "进行代码审查、辅导工程师，并与客户及交付团队协调资源、依赖、阻碍因素和上线准备。"
+      }
+    }
+  ],
+  "additionalExperience": [
+    {
+      "id": "netease",
+      "status": "verified",
+      "type": "external-kol-partnership",
+      "organization": {
+        "en": "NetEase - Malaysia Market",
+        "zh": "网易 - 马来西亚市场"
+      },
+      "title": {
+        "en": "External / KOL Partner",
+        "zh": "外部 / KOL 合作伙伴"
+      },
+      "location": {
+        "en": "Remote",
+        "zh": "远程"
+      },
+      "start": "2022",
+      "end": null,
+      "bullets": [
+        {
+          "status": "verified",
+          "text": {
+            "en": "Conduct product research, market surveys, structured player interviews, and pre-release testing for game-network products in Malaysia.",
+            "zh": "为马来西亚市场的游戏网络产品开展产品研究、市场调查、结构化玩家访谈及发布前测试。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sirius",
+      "status": "verified",
+      "type": "founder",
+      "organization": {
+        "en": "Sirius Lab",
+        "zh": "Sirius Lab"
+      },
+      "title": {
+        "en": "Founder / Software Architect",
+        "zh": "创办人 / 软件架构负责人"
+      },
+      "location": {
+        "en": "Malaysia",
+        "zh": "马来西亚"
+      },
+      "start": "2021",
+      "end": "2024",
+      "bullets": [
+        {
+          "status": "verified",
+          "text": {
+            "en": "Led product architecture and project-delivery oversight for a small independent software venture.",
+            "zh": "为小型独立软件项目负责产品架构与项目交付监督。"
+          }
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "status": "verified",
+      "institution": {
+        "en": "Tunku Abdul Rahman College, Kuala Lumpur",
+        "zh": "拉曼学院（吉隆坡）"
+      },
+      "credential": {
+        "en": "Bachelor of Information Technology (Honours), Software Systems Development",
+        "zh": "信息技术（荣誉）学士 - 软件系统开发"
+      },
+      "end": "2020"
+    },
+    {
+      "status": "verified",
+      "institution": {
+        "en": "Tunku Abdul Rahman College, Kuala Lumpur",
+        "zh": "拉曼学院（吉隆坡）"
+      },
+      "credential": {
+        "en": "Diploma in Information Systems Engineering, Computer Science",
+        "zh": "计算机科学 - 信息系统工程文凭"
+      },
+      "end": "2017"
+    }
+  ],
+  "beyondWork": {
+    "en": "Advanced Open Water Diver with an interest in disciplined preparation, teamwork, and learning in unfamiliar environments.",
+    "zh": "进阶开放水域潜水员，重视充分准备、团队协作，并乐于在陌生环境中持续学习。"
+  },
+  "confidentialEntities": [
+    {
+      "id": "retail-customer",
+      "approved": false,
+      "usePublicName": false,
+      "publicName": null,
+      "fallback": {
+        "en": "global retail customer",
+        "zh": "全球零售客户"
+      }
+    },
+    {
+      "id": "beverage-facility",
+      "approved": false,
+      "usePublicName": false,
+      "publicName": null,
+      "fallback": {
+        "en": "beverage-manufacturing facility",
+        "zh": "饮料制造设施"
+      }
+    },
+    {
+      "id": "secure-printing-facility",
+      "approved": false,
+      "usePublicName": false,
+      "publicName": null,
+      "fallback": {
+        "en": "secure-printing facility",
+        "zh": "安全印刷设施"
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "ai-wms-prototype",
+      "status": "verified",
+      "public": true,
+      "interviewReady": false,
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "label": {
+        "en": "AI-Assisted WMS Troubleshooting Prototype",
+        "zh": "AI 辅助 WMS 故障排查原型"
+      },
+      "stage": {
+        "en": "Internal prototype - not released",
+        "zh": "内部原型 - 尚未发布"
+      },
+      "summary": {
+        "en": "Designed a retrieval-augmented generation (RAG) assistant to make warehouse automation troubleshooting knowledge easier to access when inventory or process failures occurred.",
+        "zh": "设计一套检索增强生成（RAG）助手，让工程人员在库存或流程异常发生时更容易获取仓储自动化故障排查知识。"
+      },
+      "phases": [
+        {
+          "id": "prototype-v1",
+          "status": "verified",
+          "kind": "implemented-prototype",
+          "title": {
+            "en": "Prototype V1",
+            "zh": "原型 V1"
+          },
+          "text": {
+            "en": "Ran a compact language model on a project server and used RAG to retrieve relevant workflow documentation and diagrams, suggesting where support engineers could begin an investigation.",
+            "zh": "在项目服务器上运行小型语言模型，并通过 RAG 检索相关流程文档和图表，为支持工程师建议故障调查的起点。"
+          }
+        },
+        {
+          "id": "planned-v2",
+          "status": "verified",
+          "kind": "planned-not-implemented",
+          "title": {
+            "en": "Planned V2",
+            "zh": "规划中的 V2"
+          },
+          "text": {
+            "en": "Would extend retrieval to source-code context and read-only database queries so the assistant could narrow likely failure causes and provide diagnostic guidance without exposing proprietary code to end users.",
+            "zh": "计划把检索范围扩展到源代码上下文及只读数据库查询，使助手能够缩小潜在故障原因范围，并在不向最终用户暴露专有代码的情况下提供诊断指引。"
+          }
+        }
+      ],
+      "statusNote": {
+        "en": "Work concluded at prototype stage when the role ended; it was not released to customers or operated in production.",
+        "zh": "该工作在任职结束时止于原型阶段，未向客户发布，也未在生产环境中运行。"
+      },
+      "evidenceNeeded": [
+        "exact model, runtime, and application framework",
+        "document ingestion, chunking, embedding, and retrieval design",
+        "evaluation method and success criteria",
+        "observed failure cases and hallucination controls",
+        "permission, privacy, and source-code isolation design",
+        "hardware, latency, and corpus-scale details"
+      ]
+    }
+  ]
+}

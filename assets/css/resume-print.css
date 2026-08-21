@@ -452,6 +452,57 @@ p {
   font-size: 8.3pt;
 }
 
+/* The promoted hybrid résumé is deliberately kept in one document order so
+   ATS extraction and screen-reader navigation match the visual order. */
+body[data-variant="hybrid"] .resume-skill-groups,
+body[data-variant="hybrid"] .resume-customer-grid,
+body[data-variant="hybrid"] .resume-additional,
+body[data-variant="hybrid"] .resume-bottom-grid {
+  grid-template-columns: 1fr;
+}
+
+body[data-variant="hybrid"] .resume-skill-groups {
+  row-gap: 0.45mm;
+}
+
+body[data-variant="hybrid"] .resume-customer-grid {
+  gap: 2mm;
+}
+
+body[data-variant="hybrid"] .resume-customer-grid ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+body[data-variant="hybrid"] .resume-customer-grid article {
+  padding: 1.7mm 2.2mm;
+}
+
+body[data-variant="hybrid"] .resume-additional {
+  gap: 2.2mm;
+}
+
+body[data-variant="hybrid"] .resume-bottom-grid {
+  gap: 2.2mm;
+}
+
+body[data-variant="hybrid"] .resume-sheet:nth-child(2) > .resume-section,
+body[data-variant="hybrid"] .resume-sheet:nth-child(2) > .resume-bottom-grid > .resume-section {
+  margin-top: 2mm;
+}
+
+body[data-variant="hybrid"] .resume-sheet:nth-child(2) .resume-section > h2 {
+  margin-bottom: 1.1mm;
+}
+
+body[data-variant="hybrid"] .resume-sheet:nth-child(2) .resume-project article {
+  padding: 1.8mm 2.3mm;
+}
+
+body[data-variant="hybrid"] .resume-sheet:nth-child(2) .resume-additional article > p {
+  margin-bottom: 0.4mm;
+}
+
 @media print {
   html,
   body {

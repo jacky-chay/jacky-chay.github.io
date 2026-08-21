@@ -1,4 +1,5 @@
 import { createServer } from "node:http";
+import { createHash } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -10,6 +11,13 @@ import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BASE_URL = "https://jacky-chay.github.io";
 const GENERATED_NOTICE = "Generated from src/resume-data.json by scripts/build-resume.mjs. Do not edit directly.";
+const ARCHIVE_HASHES = Object.freeze({
+  "Kun-Wai-Chay-Backend-Lead-Engineer.pdf": "BF2E6D5DFD94FF805D6AFC73CEF11D751C643E8FD1E98D7E6CAFEB278F3DD2FD",
+  "Kun-Wai-Chay-Backend-Lead-Engineer-CN.pdf": "932965924A1406DAEE4D5DA1AE1F659281559654309FBCB9ADD7F74B30ECFE9B",
+  "Kun-Wai-Chay-Forward-Deployed-Engineer.pdf": "035B328AD5CE758BC4A0EF6B9F4072896658994976C73B7F04C5DE1FFF4672EE",
+  "Kun-Wai-Chay-Forward-Deployed-Engineer-CN.pdf": "D91BBB6B6DE21B5A1C1F56AC0701C026E454FD4E00AD1757AABDCBD28158EDC9",
+  "Chay Kun Wai - Resume - CN.pdf": "164FC887DA1843138CF7CB6373F3ABEC9531D0C6F2A1E0F848DC566FCEF5DFC3"
+});
 const failures = [];
 const warnings = [];
 
@@ -32,6 +40,7 @@ async function exists(filename) {
 const routes = [
   { pathname: "/", file: "index.html", language: "en" },
   { pathname: "/zh/", file: "zh/index.html", language: "zh-Hans" },
+  { pathname: "/resume/hybrid/", file: "resume/hybrid/index.html", language: "en" },
   { pathname: "/resume/backend/", file: "resume/backend/index.html", language: "en" },
   { pathname: "/resume/fde/", file: "resume/fde/index.html", language: "en" }
 ];
@@ -41,7 +50,29 @@ const htmlByRoute = new Map();
 async function verifyCanonicalAndHtml() {
   const canonical = JSON.parse(await readFile(path.join(ROOT, "src", "resume-data.json"), "utf8"));
   check(canonical.meta.schemaVersion === 1, "Canonical schema version must be 1.");
+  check(canonical.meta.defaultVariant === "hybrid", "The promoted default variant must be hybrid.");
   check(canonical.meta.translationReview === "pending-native-review" || canonical.meta.translationReview === "human-reviewed", "Chinese translation review state is missing.");
+  const artifacts = canonical.meta.artifacts;
+  check(artifacts?.websiteDownloadLanguage === "en" || artifacts?.websiteDownloadLanguage === "zh", "Artifact website download language must be en or zh.");
+  check(artifacts?.activePdfs?.en === "Kun-Wai-Chay-Backend-Technical-Lead.pdf", "Active English PDF must be the hybrid Backend Technical Lead résumé.");
+  check(artifacts?.activePdfs?.zh === "Kun-Wai-Chay-Backend-Technical-Lead-CN.pdf", "Active Chinese PDF must be the hybrid Backend Technical Lead résumé.");
+  const archiveRecords = artifacts?.archives ?? [];
+  check(archiveRecords.length === Object.keys(ARCHIVE_HASHES).length, "Artifact manifest must contain all five frozen PDF archives.");
+  const archiveNames = archiveRecords.map((record) => record.filename);
+  check(new Set(archiveNames).size === archiveNames.length, "Artifact manifest contains duplicate archive filenames.");
+  for (const [filename, expectedHash] of Object.entries(ARCHIVE_HASHES)) {
+    const record = archiveRecords.find((item) => item.filename === filename);
+    check(record?.sha256 === expectedHash, `${filename} does not have the locked archive SHA-256 manifest value.`);
+  }
+  const activeNames = Object.values(artifacts?.activePdfs ?? {});
+  check(new Set(activeNames).size === activeNames.length, "Active PDF filenames must be unique.");
+  check(activeNames.every((filename) => !archiveNames.includes(filename)), "An active PDF filename is also marked as an archive.");
+  const hybrid = canonical.variants?.hybrid;
+  check(Boolean(hybrid), "Canonical hybrid variant is missing.");
+  check(hybrid?.resumeTitle?.en === "Backend Lead Engineer | Technical Lead", "Hybrid English résumé title is incorrect.");
+  check(hybrid?.resumeTitle?.zh === "后端主导工程师 | 技术负责人", "Hybrid Chinese résumé title is incorrect.");
+  check(Array.isArray(hybrid?.skillGroups) && hybrid.skillGroups.length === 4, "Hybrid variant must contain exactly four skill groups.");
+  check((hybrid?.skillGroups ?? []).flatMap((group) => group.items ?? []).length === 18, "Hybrid variant must contain exactly 18 primary skill items.");
   for (const [variantName, variant] of Object.entries(canonical.variants ?? {})) {
     check(variant.heroSummary?.en && variant.heroSummary?.zh, `${variantName} is missing its bilingual canonical hero summary.`);
   }
@@ -75,13 +106,19 @@ async function verifyCanonicalAndHtml() {
     const stack = project.technologies?.join(" ") ?? "";
     check(["Angular", "React", "Java EE", "WildFly", "PostgreSQL"].every((technology) => stack.includes(technology)), `${project.id} is missing its verified technology stack.`);
     check(project.commercialNote?.status === "private-summary", `${project.id} must keep commercial terms private.`);
+    check(project.variants?.includes("hybrid"), `${project.id} is not included in the hybrid variant.`);
   }
+  check(canonical.projects?.every((project) => project.variants?.includes("hybrid")), "The AI prototype is not included in the hybrid variant.");
+  const hybridBullets = canonical.experience.flatMap((role) => role.bullets ?? []).filter((bullet) => bullet.variants?.includes("hybrid"));
+  check(hybridBullets.length >= 9, "Hybrid variant does not include the required Midea and Swisslog experience bullets.");
+  check(canonical.deliveryCoverage?.every((item) => item.variants?.includes("hybrid")), "Hybrid delivery evidence is missing a hybrid membership.");
 
   const canonicalText = JSON.stringify(canonical);
   check(!/\[(?:todo|tbd|placeholder|insert|verify|metric|company|customer|name)[^\]]*\]/i.test(canonicalText), "Canonical data contains a bracketed placeholder.");
   check(!/\b(?:production ai|production llm|deployed ai|deployed llm)\b/i.test(canonicalText), "Canonical data contains a prohibited production-AI claim.");
   check(!/99\.99%/i.test(canonicalText), "Canonical data contains an unsupported AI-problem prevalence metric.");
   check(!/\b7\+\s+years?\b/i.test(canonicalText), "Canonical data rounds experience up to an unsupported 7+ years.");
+  check(!/\b(?:200\s*,?\s*000|100\s*,?\s*000|200k|100k)\b/i.test(canonicalText), "Canonical data contains a private commercial amount.");
   check(!/\b(?:involved in|helped with|responsible for|hard-working|fast learner|cutting-edge|big project|excellent time management)\b/i.test(canonicalText), "Canonical data contains banned resume wording.");
 
   for (const route of routes) {
@@ -98,22 +135,30 @@ async function verifyCanonicalAndHtml() {
     check(!/facebook|instagram|wechat/i.test(html), `${route.pathname} contains personal social links.`);
     if (route.language === "zh-Hans") {
       check(html.includes("AI 辅助 WMS 故障排查原型") && html.includes("原型 V1") && html.includes("规划中的 V2") && html.includes("内部原型 - 尚未发布"), `${route.pathname} is missing the scoped Chinese AI prototype case study.`);
-      check(html.includes("ManualWarehouse 仓储管理系统") && html.includes("潜水中心出勤与账单系统"), `${route.pathname} is missing the two Chinese independent customer projects.`);
+      check(html.includes("人工仓储管理系统") && html.includes("潜水中心出勤与账单系统"), `${route.pathname} is missing the two Chinese independent customer projects.`);
     } else {
       check(html.includes("AI-Assisted WMS Troubleshooting Prototype") && html.includes("Prototype V1") && html.includes("Planned V2") && html.includes("Internal prototype - not released"), `${route.pathname} is missing the scoped AI prototype case study.`);
-      check(html.includes("ManualWarehouse WMS") && html.includes("Dive Center Attendance and Billing System"), `${route.pathname} is missing the two independent customer projects.`);
+      check(html.includes("Manual Warehouse Management System") && html.includes("Dive Center Attendance and Billing System"), `${route.pathname} is missing the two independent customer projects.`);
+    }
+    if (route.pathname === "/resume/hybrid/") {
+      check(html.includes("Backend Lead Engineer | Technical Lead"), "Hybrid print route has the wrong headline.");
+      check(html.includes("Independent Customer Projects"), "Hybrid print route is missing independent customer projects.");
+      check(!/Selected Engineering Evidence|Engineering Scope|Deployment Scope/i.test(html), "Hybrid print route retains a duplicated recap section.");
     }
     check(!/\b(?:birth|born)\b|\bage\s*[:<]/i.test(html), `${route.pathname} exposes birth or age information.`);
     check(/<title>[^<]{10,}<\/title>/i.test(html), `${route.pathname} lacks a descriptive title.`);
     check(/<meta name="description" content="[^"]{60,}"/i.test(html), `${route.pathname} lacks a useful meta description.`);
     check(/rel="canonical"/i.test(html), `${route.pathname} lacks a canonical URL.`);
     if (route.pathname.startsWith("/resume/")) {
+      check(/name="robots" content="noindex(?:,\s*nofollow)?"/i.test(html), `${route.pathname} must be marked noindex.`);
       check(/class="resume-header-photo"/i.test(html), `${route.pathname} is missing the resume header portrait.`);
       check(/assets\/img\/profile-img-800\.webp/i.test(html), `${route.pathname} is missing the canonical portrait asset.`);
     }
     if (!route.pathname.startsWith("/resume/")) {
       check(/hreflang="en"/i.test(html) && /hreflang="zh-Hans"/i.test(html), `${route.pathname} lacks bilingual hreflang links.`);
       check(/property="og:image"/i.test(html), `${route.pathname} lacks Open Graph image metadata.`);
+      if (route.pathname === "/") check(html.includes('href="zh/index.html"'), "English language switch must link directly to zh/index.html.");
+      if (route.pathname === "/zh/") check(html.includes('href="../index.html"'), "Chinese language switch must link directly to ../index.html.");
     }
   }
 
@@ -126,7 +171,8 @@ async function verifyCanonicalAndHtml() {
       check(/class="hero-portrait"/i.test(html), `${route.pathname} is missing the compact hero portrait.`);
       check(/id="delivery-evidence"/i.test(html), `${route.pathname} is missing the merged delivery evidence section.`);
       check(!/profile-panel|Professional profile|工作方式|method-list|methods-title/i.test(html), `${route.pathname} retains the retired duplicate profile or delivery section.`);
-      check(html.includes("Kun-Wai-Chay-Backend-Lead-Engineer.pdf"), `${route.pathname} does not use the canonical backend PDF filename.`);
+      check(html.includes("Kun-Wai-Chay-Backend-Technical-Lead.pdf"), `${route.pathname} does not use the promoted hybrid PDF filename.`);
+      check(!/Forward-Deployed-Engineer|downloadFde|FDE Resume|FDE 简历/i.test(html), `${route.pathname} exposes an FDE résumé download or label.`);
       const imageTags = html.match(/<img\b[^>]*>/gi) ?? [];
     for (const tag of imageTags) {
       check(/alt="[^"]+"/i.test(tag), `${route.pathname} contains an image without meaningful alt text.`);
@@ -134,6 +180,24 @@ async function verifyCanonicalAndHtml() {
     }
     const executableScripts = (html.match(/<script(?![^>]*type="application\/ld\+json")[^>]*>/gi) ?? []).length;
     check(executableScripts === 0, `${route.pathname} should render all professional content without JavaScript.`);
+  }
+
+  const builder = await readFile(path.join(ROOT, "scripts", "build-resume.mjs"), "utf8");
+  for (const archiveFilename of Object.keys(ARCHIVE_HASHES)) {
+    check(!builder.includes(archiveFilename), `Build script must not target frozen archive PDF: ${archiveFilename}.`);
+  }
+  check(/data\.meta\.artifacts\.activePdfs/.test(builder), "Build script must derive active PDF destinations from the canonical artifact manifest.");
+  check(/\[\"hybrid\",\s*activePdfs\.en,\s*\"en\"\]/.test(builder), "Build script must export the active English hybrid PDF.");
+  check(/\[\"hybrid\",\s*activePdfs\.zh,\s*\"zh\"\]/.test(builder), "Build script must export the active Chinese hybrid PDF.");
+}
+
+async function verifyArchiveHashes() {
+  for (const [filename, expectedHash] of Object.entries(ARCHIVE_HASHES)) {
+    const fullPath = path.join(ROOT, "assets", "download", filename);
+    check(await exists(fullPath), `Frozen archive PDF is missing: ${filename}.`);
+    if (!(await exists(fullPath))) continue;
+    const actualHash = createHash("sha256").update(await readFile(fullPath)).digest("hex").toUpperCase();
+    check(actualHash === expectedHash, `${filename} changed; expected locked SHA-256 ${expectedHash}, received ${actualHash}.`);
   }
 }
 
@@ -368,18 +432,18 @@ async function verifyPdf(filename, expectedTitle, language = "en") {
     const characterCount = extracted.replace(/\s/g, "").length;
     check(characterCount >= 700 && characterCount <= 5000, `${filename} has ${characterCount} extracted Chinese characters; expected a complete two-page resume.`);
   } else {
-    check(wordCount >= 620 && wordCount <= 900, `${filename} has ${wordCount} extracted words; expected an approximately 650-850 word resume.`);
+    check(wordCount >= 650 && wordCount <= 820, `${filename} has ${wordCount} extracted words; expected an approximately 650-820 word hybrid resume.`);
   }
   const required = language === "zh"
-    ? ["谢官韦（Jacky）", "jackychay@live.com", "美的集团", "后端主导工程师（Technical Lead）", "中国办公室及客户现场", "2024年12月 - 2026年7月", "Swisslog Malaysia Sdn. Bhd.", "马来西亚办公室及区域客户现场", "2020年2月 - 2024年12月", "可接受频繁全球出差", "WhatsApp", "AI 辅助 WMS 故障排查原型", "内部原型 - 尚未发布", "原型 V1", "规划中的 V2", "检索增强生成（RAG）", "只读数据库", "Java", "SQL", "拉曼学院（吉隆坡）"]
-    : ["Chay Kun Wai (Jacky)", "jackychay@live.com", "Midea Group", "Backend Lead Engineer (Technical Lead)", "China office and customer sites", "Dec 2024 - Jul 2026", "Swisslog Malaysia Sdn. Bhd.", "Malaysia office and regional customer sites", "Feb 2020 - Dec 2024", "Open to frequent worldwide travel", "WhatsApp", "AI-Assisted WMS Troubleshooting Prototype", "Internal prototype - not released", "Prototype V1", "Planned V2", "retrieval-augmented generation (RAG)", "read-only database", "Java", "SQL", "Tunku Abdul Rahman College"];
+    ? ["谢官韦（Jacky）", "jackychay@live.com", "美的集团", "后端主导工程师 | 技术负责人", "中国办公室及客户现场", "2024年12月 - 2026年7月", "Swisslog Malaysia Sdn. Bhd.", "马来西亚办公室及区域客户现场", "2020年2月 - 2024年12月", "可接受频繁全球出差", "WhatsApp", "AI 辅助 WMS 故障排查原型", "内部原型 - 尚未发布", "原型 V1", "规划中的 V2", "检索增强生成（RAG）", "只读数据库", "Java", "SQL", "拉曼学院（吉隆坡）"]
+    : ["Chay Kun Wai (Jacky)", "jackychay@live.com", "Midea Group", "Backend Lead Engineer | Technical Lead", "China office and customer sites", "Dec 2024 - Jul 2026", "Swisslog Malaysia Sdn. Bhd.", "Malaysia office and regional customer sites", "Feb 2020 - Dec 2024", "Open to frequent worldwide travel", "WhatsApp", "AI-Assisted WMS Troubleshooting Prototype", "Internal prototype - not released", "Prototype V1", "Planned V2", "retrieval-augmented generation (RAG)", "read-only database", "Java", "SQL", "Tunku Abdul Rahman College"];
   const projectRequired = language === "zh"
-    ? ["ManualWarehouse 仓储管理系统", "潜水中心出勤与账单系统", "Angular", "Java EE", "WildFly", "PostgreSQL"]
-    : ["ManualWarehouse WMS", "Dive Center Attendance and Billing System", "Angular", "Java EE", "WildFly", "PostgreSQL"];
+    ? ["人工仓储管理系统", "潜水中心出勤与账单系统", "Angular", "Java EE", "WildFly", "PostgreSQL"]
+    : ["Manual Warehouse Management System", "Dive Center Attendance and Billing System", "Angular", "Java EE", "WildFly", "PostgreSQL"];
   for (const requiredText of [...required, ...projectRequired]) {
     check(extracted.includes(requiredText), `${filename} extracted text is missing: ${requiredText}`);
   }
-  for (const prohibited of ["QR code", "Date of Birth", "Birth Year", "Age:", "Facebook", "Instagram", "github.com", "production AI", "direct reports", "7+ years", "99.99%"] ) {
+  for (const prohibited of ["QR code", "Date of Birth", "Birth Year", "Age:", "Facebook", "Instagram", "github.com", "production AI", "direct reports", "7+ years", "99.99%", "200,000", "100,000", "200k", "100k"] ) {
     check(!extracted.toLowerCase().includes(prohibited.toLowerCase()), `${filename} contains prohibited content: ${prohibited}`);
   }
   for (const expectedUrl of [
@@ -392,19 +456,32 @@ async function verifyPdf(filename, expectedTitle, language = "en") {
     check([...urls].some((url) => url === expectedUrl || url === `${expectedUrl}/`), `${filename} is missing the PDF hyperlink: ${expectedUrl}`);
   }
   check(hasStructure, `${filename} does not expose a tagged structure tree.`);
+  const sectionOrder = language === "zh"
+    ? ["专业简介", "核心技术与交付能力", "美的集团", "Swisslog Malaysia Sdn. Bhd.", "独立客户项目", "人工仓储管理系统", "潜水中心出勤与账单系统", "应用型 AI 原型", "其他经历与合作", "教育背景", "语言能力"]
+    : ["Professional Summary", "Core Technical and Delivery Strengths", "Midea Group", "Swisslog Malaysia Sdn. Bhd.", "Independent Customer Projects", "Manual Warehouse Management System", "Dive Center Attendance and Billing System", "Applied AI Prototype", "Additional Experience and Partnerships", "Education", "Languages"];
+  const normalizedExtracted = extracted.toLocaleUpperCase("en-US");
+  let previousIndex = -1;
+  for (const label of sectionOrder) {
+    const currentIndex = normalizedExtracted.indexOf(label.toLocaleUpperCase("en-US"));
+    check(currentIndex >= 0, `${filename} extracted text is missing ordered section label: ${label}`);
+    if (currentIndex >= 0) {
+      check(currentIndex > previousIndex, `${filename} extracted section order is incorrect around: ${label}`);
+      previousIndex = currentIndex;
+    }
+  }
+  check(!/Selected Engineering Evidence|Engineering Scope|Deployment Scope/i.test(extracted), `${filename} contains a duplicated hybrid recap heading.`);
   const metadata = await pdf.getMetadata();
   check(metadata.info?.Title === expectedTitle, `${filename} has incorrect document title metadata: ${metadata.info?.Title ?? "missing"}`);
   await loadingTask.destroy();
 }
 
 async function verifyPdfs() {
-  await verifyPdf("Kun-Wai-Chay-Backend-Lead-Engineer.pdf", "Chay Kun Wai (Jacky) - Backend Lead Engineer | Technical Lead");
-  await verifyPdf("Kun-Wai-Chay-Forward-Deployed-Engineer.pdf", "Chay Kun Wai (Jacky) - Forward-Deployed Engineer | Technical Lead");
-  await verifyPdf("Kun-Wai-Chay-Backend-Lead-Engineer-CN.pdf", "谢官韦（Jacky） - 后端主导工程师 | 技术负责人", "zh");
-  await verifyPdf("Kun-Wai-Chay-Forward-Deployed-Engineer-CN.pdf", "谢官韦（Jacky） - 前线部署工程师 | 技术负责人", "zh");
+  await verifyPdf("Kun-Wai-Chay-Backend-Technical-Lead.pdf", "Chay Kun Wai (Jacky) - Backend Lead Engineer | Technical Lead");
+  await verifyPdf("Kun-Wai-Chay-Backend-Technical-Lead-CN.pdf", "谢官韦（Jacky） - 后端主导工程师 | 技术负责人", "zh");
 }
 
 await verifyCanonicalAndHtml();
+await verifyArchiveHashes();
 await verifyLinks();
 const { server, origin } = await startServer();
 try {

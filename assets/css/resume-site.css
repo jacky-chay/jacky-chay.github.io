@@ -936,6 +936,12 @@ h3 {
     color: #071c17;
     background: var(--accent);
   }
+
+  .availability-badge {
+    color: var(--accent);
+    background: rgb(118 218 199 / 14%);
+    border-color: rgb(118 218 199 / 42%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

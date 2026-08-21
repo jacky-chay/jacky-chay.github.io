@@ -3,8 +3,37 @@
     "schemaVersion": 1,
     "lastVerified": "2026-08-21",
     "translationReview": "pending-native-review",
-    "defaultVariant": "backend",
-    "defaultLanguage": "en"
+    "defaultVariant": "hybrid",
+    "defaultLanguage": "en",
+    "artifacts": {
+      "websiteDownloadLanguage": "en",
+      "activePdfs": {
+        "en": "Kun-Wai-Chay-Backend-Technical-Lead.pdf",
+        "zh": "Kun-Wai-Chay-Backend-Technical-Lead-CN.pdf"
+      },
+      "archives": [
+        {
+          "filename": "Kun-Wai-Chay-Backend-Lead-Engineer.pdf",
+          "sha256": "BF2E6D5DFD94FF805D6AFC73CEF11D751C643E8FD1E98D7E6CAFEB278F3DD2FD"
+        },
+        {
+          "filename": "Kun-Wai-Chay-Backend-Lead-Engineer-CN.pdf",
+          "sha256": "932965924A1406DAEE4D5DA1AE1F659281559654309FBCB9ADD7F74B30ECFE9B"
+        },
+        {
+          "filename": "Kun-Wai-Chay-Forward-Deployed-Engineer.pdf",
+          "sha256": "035B328AD5CE758BC4A0EF6B9F4072896658994976C73B7F04C5DE1FFF4672EE"
+        },
+        {
+          "filename": "Kun-Wai-Chay-Forward-Deployed-Engineer-CN.pdf",
+          "sha256": "D91BBB6B6DE21B5A1C1F56AC0701C026E454FD4E00AD1757AABDCBD28158EDC9"
+        },
+        {
+          "filename": "Chay Kun Wai - Resume - CN.pdf",
+          "sha256": "164FC887DA1843138CF7CB6373F3ABEC9531D0C6F2A1E0F848DC566FCEF5DFC3"
+        }
+      ]
+    }
   },
   "factControls": {
     "identity": "verified",
@@ -88,12 +117,85 @@
     ]
   },
   "variants": {
+    "hybrid": {
+      "title": {
+        "en": "Backend Lead Engineer & Technical Lead",
+        "zh": "后端主导工程师与技术负责人"
+      },
+      "resumeTitle": {
+        "en": "Backend Lead Engineer | Technical Lead",
+        "zh": "后端主导工程师 | 技术负责人"
+      },
+      "summary": {
+        "en": "Backend Lead Engineer and hands-on Technical Lead with 6+ years delivering Java-based enterprise systems and warehouse automation across Malaysia and China. Experienced in customer discovery, requirements and SRS, system design, backend implementation, REST integrations, testing, commissioning, code review, mentoring, and delivery coordination. Worked from Midea's China office and customer sites and independently delivered two closed-source systems into customer-hosted environments. Open to relocate to Singapore and frequent worldwide travel.",
+        "zh": "拥有 6 年以上经验的后端主导工程师及一线技术负责人，曾在马来西亚和中国交付基于 Java 的企业系统与仓储自动化系统。具备客户需求调研、需求规格（SRS）、系统设计、后端开发、REST 集成、测试、现场上线调试、代码审查、工程师辅导及交付协调经验。任职美的期间常驻中国办公室和客户现场，并独立将两套闭源系统交付至客户自有服务器。愿意迁居新加坡并接受频繁全球出差。"
+      },
+      "heroSummary": {
+        "en": "Backend Lead Engineer and hands-on Technical Lead with 6+ years delivering Java-based enterprise systems and warehouse automation across Malaysia and China. Combines backend implementation and system design with on-site customer discovery, commissioning, code review, mentoring, and delivery coordination. Worked from Midea's China office and customer sites and independently delivered two customer-hosted systems.",
+        "zh": "拥有 6 年以上经验的后端主导工程师及一线技术负责人，曾在马来西亚和中国交付基于 Java 的企业系统与仓储自动化系统。兼具后端开发、系统设计、现场需求调研、上线调试、代码审查、工程师辅导及交付协调能力；任职美的期间常驻中国办公室和客户现场，并独立交付两套部署于客户服务器的系统。"
+      },
+      "skillGroups": [
+        {
+          "title": {
+            "en": "Backend engineering",
+            "zh": "后端工程"
+          },
+          "items": [
+            "Java",
+            "Java EE",
+            "SQL",
+            "REST APIs"
+          ]
+        },
+        {
+          "title": {
+            "en": "Data and runtime",
+            "zh": "数据与运行平台"
+          },
+          "items": [
+            "PostgreSQL",
+            "Oracle Database",
+            "SQL Server",
+            "WildFly"
+          ]
+        },
+        {
+          "title": {
+            "en": "System delivery",
+            "zh": "系统交付"
+          },
+          "items": [
+            "System design",
+            "Requirements / SRS",
+            "Testing and debugging",
+            "Commissioning",
+            "Technical scoping"
+          ]
+        },
+        {
+          "title": {
+            "en": "Technical leadership",
+            "zh": "技术领导"
+          },
+          "items": [
+            "Code review",
+            "Mentoring",
+            "Technical interviews",
+            "Customer workshops",
+            "Delivery risk coordination"
+          ]
+        }
+      ]
+    },
     "backend": {
       "title": {
         "en": "Backend Lead Engineer & Technical Lead",
         "zh": "后端主导工程师与技术负责人"
       },
-      "resumeTitle": "Backend Lead Engineer | Technical Lead",
+      "resumeTitle": {
+        "en": "Backend Lead Engineer | Technical Lead",
+        "zh": "后端主导工程师 | 技术负责人"
+      },
       "summary": {
         "en": "Backend lead engineer and hands-on technical lead with 6+ years delivering Java-based warehouse automation systems from offices and customer sites in Malaysia and China. Experienced across customer requirements, system design, implementation, testing, commissioning, code review, and engineer mentoring. Open to relocate to Singapore and frequent worldwide travel.",
         "zh": "拥有 6 年以上经验的后端主导工程师及一线技术负责人，长期在马来西亚和中国的办公室及客户现场交付基于 Java 的仓储自动化系统。具备从客户需求、系统设计、开发与测试，到现场上线、代码审查及工程师辅导的端到端经验，愿意迁居新加坡并接受频繁国际出差。"
@@ -158,7 +260,10 @@
         "en": "Customer-Facing Technical Lead & Software Engineer",
         "zh": "客户交付型技术负责人与软件工程师"
       },
-      "resumeTitle": "Forward-Deployed Engineer | Technical Lead",
+      "resumeTitle": {
+        "en": "Forward-Deployed Engineer | Technical Lead",
+        "zh": "前线部署工程师 | 技术负责人"
+      },
       "summary": {
         "en": "Customer-facing technical lead and software engineer with 6+ years translating operational requirements into production warehouse automation systems across APAC. Combines on-site discovery, technical scoping, hands-on Java delivery, commissioning, code review, mentoring, and multilingual stakeholder communication. Open to relocate to Singapore and frequent worldwide travel.",
         "zh": "拥有 6 年以上经验的客户交付型技术负责人及软件工程师，擅长把亚太区客户的运营需求转化为正式运行的仓储自动化系统。具备现场需求调研、技术范围界定、Java 开发、上线调试、代码审查、工程师辅导及多语言沟通经验，愿意迁居新加坡并接受频繁国际出差。"
@@ -292,11 +397,13 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 2,
-            "fde": 1
+            "fde": 1,
+            "hybrid": 2
           },
           "text": {
             "en": "Led backend design and delivery across concurrent warehouse automation programs, translating on-site customer workflows into SRS documents, technical designs, and implementation plans.",
@@ -308,15 +415,17 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 1,
-            "fde": 2
+            "fde": 2,
+            "hybrid": 1
           },
           "text": {
-            "en": "Designed and implemented core system features while reviewing code and aligning contributors with shared engineering standards.",
-            "zh": "设计并实现系统核心功能，同时进行代码审查，推动参与工程师遵循统一的开发标准。"
+            "en": "Designed and implemented core Java and SQL system features while reviewing code and aligning contributors with shared engineering standards.",
+            "zh": "设计并实现核心 Java 与 SQL 系统功能，同时进行代码审查，推动参与工程师遵循统一的开发标准。"
           }
         },
         {
@@ -324,11 +433,13 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 4,
-            "fde": 4
+            "fde": 4,
+            "hybrid": 5
           },
           "text": {
             "en": "Guided new engineers through warehouse-domain concepts, development setup, and delivery practices; participated in technical interviews.",
@@ -340,11 +451,13 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 3,
-            "fde": 3
+            "fde": 3,
+            "hybrid": 3
           },
           "text": {
             "en": "Coordinated technical scope, engineering capacity, dependencies, and delivery risks with customer and internal stakeholders.",
@@ -356,11 +469,13 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 5,
-            "fde": 5
+            "fde": 5,
+            "hybrid": 4
           },
           "text": {
             "en": "Worked from Midea's China office and customer sites throughout the assignment, partnering directly with local stakeholders during discovery, implementation, and delivery readiness.",
@@ -400,11 +515,13 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 1,
-            "fde": 2
+            "fde": 2,
+            "hybrid": 1
           },
           "text": {
             "en": "Built and maintained Java modules supporting receiving, putaway, cycle-count, inventory, and infeed/outfeed workflows across warehouse automation deployments.",
@@ -416,11 +533,13 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 2,
-            "fde": 3
+            "fde": 3,
+            "hybrid": 3
           },
           "text": {
             "en": "Owned test planning and defect investigation for deployments serving global retail customers, collaborating with engineering and site teams through production readiness.",
@@ -432,15 +551,17 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 3,
-            "fde": 1
+            "fde": 1,
+            "hybrid": 2
           },
           "text": {
-            "en": "Led module delivery for beverage-manufacturing and secure-printing facilities, from requirements analysis through implementation and commissioning support.",
-            "zh": "主导饮料制造及安全印刷设施的功能模块交付，覆盖需求分析、开发实施及现场上线支持。"
+            "en": "Led module delivery for anonymized beverage-manufacturing and secure-printing facilities, from requirements analysis through implementation and on-site commissioning support, including assignments in China.",
+            "zh": "主导匿名饮料制造及安全印刷设施的功能模块交付，覆盖需求分析、开发实施及现场上线支持，包括在中国的项目任务。"
           }
         },
         {
@@ -464,11 +585,13 @@
           "status": "verified",
           "variants": [
             "backend",
-            "fde"
+            "fde",
+            "hybrid"
           ],
           "priority": {
             "backend": 5,
-            "fde": 5
+            "fde": 5,
+            "hybrid": 4
           },
           "text": {
             "en": "Mentored new engineers on development setup, warehouse fundamentals, debugging, and the software delivery lifecycle.",
@@ -534,11 +657,13 @@
       "status": "verified",
       "variants": [
         "backend",
-        "fde"
+        "fde",
+        "hybrid"
       ],
       "priority": {
         "backend": 2,
-        "fde": 1
+        "fde": 1,
+        "hybrid": 2
       },
       "title": {
         "en": "Requirements and technical design",
@@ -554,11 +679,13 @@
       "status": "verified",
       "variants": [
         "backend",
-        "fde"
+        "fde",
+        "hybrid"
       ],
       "priority": {
         "backend": 1,
-        "fde": 3
+        "fde": 3,
+        "hybrid": 1
       },
       "title": {
         "en": "Backend implementation",
@@ -574,11 +701,13 @@
       "status": "verified",
       "variants": [
         "backend",
-        "fde"
+        "fde",
+        "hybrid"
       ],
       "priority": {
         "backend": 3,
-        "fde": 4
+        "fde": 4,
+        "hybrid": 3
       },
       "title": {
         "en": "Testing and operational readiness",
@@ -594,11 +723,13 @@
       "status": "verified",
       "variants": [
         "backend",
-        "fde"
+        "fde",
+        "hybrid"
       ],
       "priority": {
         "backend": 4,
-        "fde": 2
+        "fde": 2,
+        "hybrid": 4
       },
       "title": {
         "en": "Technical leadership and delivery coordination",
@@ -677,13 +808,14 @@
       "relationship": "independent-customer-delivery",
       "variants": [
         "backend",
-        "fde"
+        "fde",
+        "hybrid"
       ],
       "start": "2026-08",
       "end": "2026-08",
       "title": {
-        "en": "ManualWarehouse WMS",
-        "zh": "ManualWarehouse 仓储管理系统"
+        "en": "Manual Warehouse Management System",
+        "zh": "人工仓储管理系统"
       },
       "domain": {
         "en": "F&B manufacturing warehouse (anonymized)",
@@ -694,16 +826,16 @@
         "zh": "独立闭源客户交付"
       },
       "summary": {
-        "en": "Built and commercially delivered a closed-source WMS for an anonymized F&B manufacturing warehouse, covering receiving, picking, inventory allocation, shipping, and upstream REST API integrations.",
-        "zh": "为一家匿名食品饮料制造仓库独立开发并商业交付闭源 WMS，覆盖收货、拣选、库存分配、发运及上游 REST API 集成。"
+        "en": "Independently built and commercially delivered a closed-source warehouse management system for an anonymized F&B manufacturing warehouse, covering receiving, picking, inventory allocation, shipping, and REST API integrations with upstream systems.",
+        "zh": "独立为一家匿名食品饮料制造仓库开发并商业交付闭源仓储管理系统，覆盖收货、拣选、库存分配、发运及与上游系统的 REST API 集成。"
       },
       "bullets": [
         {
           "id": "upstream-integration",
           "status": "verified",
           "text": {
-            "en": "Implemented REST APIs for communication with upstream systems and deployed the customer-hosted application.",
-            "zh": "实现与上游系统通信的 REST API，并将应用部署至客户服务器。"
+            "en": "Deployed the Java EE application on WildFly with PostgreSQL in the customer's server environment.",
+            "zh": "使用 WildFly 部署基于 Java EE 的应用，并在客户服务器环境中配置 PostgreSQL。"
           }
         }
       ],
@@ -728,7 +860,8 @@
       "relationship": "independent-customer-delivery",
       "variants": [
         "backend",
-        "fde"
+        "fde",
+        "hybrid"
       ],
       "start": "2026-06",
       "end": "2026-06",
@@ -745,16 +878,16 @@
         "zh": "独立闭源客户交付"
       },
       "summary": {
-        "en": "Built and commercially delivered a closed-source attendance and billing system for an anonymized swimming and scuba-diving center, covering student registration, attendance, bill/payment checks, and monthly and custom reports.",
-        "zh": "为一家匿名游泳及水肺潜水中心独立开发并商业交付闭源出勤与账单系统，覆盖学员登记、出勤记录、账单/付款查询及月度和自定义报表。"
+        "en": "Independently built and commercially delivered a closed-source attendance and billing system for an anonymized swimming and scuba-diving center, covering student registration, attendance, bill and payment checks, and monthly and custom reports.",
+        "zh": "独立为一家匿名游泳及水肺潜水中心开发并商业交付闭源出勤与账单系统，覆盖学员登记、出勤记录、账单与付款查询及月度和自定义报表。"
       },
       "bullets": [
         {
           "id": "reporting-deployment",
           "status": "verified",
           "text": {
-            "en": "Implemented the customer-facing workflows and deployed the application to the dive center's server for operational use.",
-            "zh": "实现面向客户的业务流程，并将应用部署至潜水中心服务器投入使用。"
+            "en": "Implemented the customer-facing workflows and deployed the system to the dive center's server for operational use.",
+            "zh": "实现面向客户的业务流程，并将系统部署至潜水中心服务器投入使用。"
           }
         }
       ],
@@ -842,7 +975,8 @@
       "interviewReady": false,
       "variants": [
         "backend",
-        "fde"
+        "fde",
+        "hybrid"
       ],
       "label": {
         "en": "AI-Assisted WMS Troubleshooting Prototype",

@@ -9,6 +9,7 @@ const GENERATED_NOTICE = "Generated from src/resume-data.json by scripts/build-r
 const BASE_URL = "https://jacky-chay.github.io";
 
 const data = JSON.parse(await readFile(DATA_PATH, "utf8"));
+const DEFAULT_VARIANT = data.meta?.defaultVariant ?? "backend";
 
 function assert(condition, message) {
   if (!condition) throw new Error(`Resume data validation failed: ${message}`);
@@ -32,7 +33,13 @@ function validateCanonicalData() {
   assert(data.meta?.schemaVersion === 1, "unsupported schema version");
   assert(data.profile?.legalName && data.profile?.email && data.profile?.phone && data.profile?.whatsappUrl, "profile identity and contact fields are required");
   assert(/^https:\/\/wa\.me\/\d+$/.test(data.profile.whatsappUrl), "WhatsApp URL must use a wa.me number link");
-  assert(data.variants?.backend && data.variants?.fde, "both backend and fde variants are required");
+  assert(data.variants?.backend && data.variants?.fde && data.variants?.hybrid, "backend, fde, and hybrid variants are required");
+  assert(data.variants[DEFAULT_VARIANT], `default variant ${DEFAULT_VARIANT} is not defined`);
+  assert(data.meta?.artifacts?.activePdfs?.en && data.meta?.artifacts?.activePdfs?.zh, "active English and Chinese PDF artifact names are required");
+  const activePdfNames = Object.values(data.meta.artifacts.activePdfs);
+  assert(new Set(activePdfNames).size === activePdfNames.length, "active PDF artifact names must be unique");
+  const archiveNames = new Set((data.meta.artifacts.archives ?? []).map((archive) => archive.filename));
+  activePdfNames.forEach((filename) => assert(!archiveNames.has(filename), `${filename} cannot be both active and archived`));
   for (const variant of Object.values(data.variants)) {
     assert(variant.heroSummary?.en && variant.heroSummary?.zh, "each role variant requires a bilingual hero summary");
   }
@@ -134,10 +141,10 @@ function publicEntityLabel(entity, lang) {
 function sortedBullets(role, variant) {
   return role.bullets
     .filter((bullet) => bullet.status === "verified" && bullet.variants.includes(variant))
-    .sort((a, b) => a.priority[variant] - b.priority[variant]);
+    .sort((a, b) => (a.priority?.[variant] ?? Number.MAX_SAFE_INTEGER) - (b.priority?.[variant] ?? Number.MAX_SAFE_INTEGER));
 }
 
-function renderMetadata({ lang, canonicalPath, title, description }) {
+function renderMetadata({ lang, canonicalPath, title, description, variant = DEFAULT_VARIANT }) {
   const canonical = `${BASE_URL}${canonicalPath}`;
   const profile = data.profile;
   const structured = {
@@ -146,7 +153,7 @@ function renderMetadata({ lang, canonicalPath, title, description }) {
     name: profile.legalName,
     alternateName: "Jacky Chay",
     url: profile.portfolioUrl,
-    jobTitle: text(data.variants.backend.title, lang),
+    jobTitle: text(data.variants[variant].title, lang),
     sameAs: [profile.linkedinUrl],
     knowsLanguage: profile.languages.map((language) => text(language.name, "en")),
     address: {
@@ -192,8 +199,7 @@ const labels = {
     languageLabel: "Language",
     eyebrow: "Lead engineering profile",
     availability: "Open to senior engineering and technical leadership positions",
-    downloadBackend: "Download Backend Lead Resume",
-    downloadFde: "Download FDE Resume",
+    downloadResume: "Download Resume",
     email: "Email",
     whatsapp: "WhatsApp",
     highlights: "Professional highlights",
@@ -215,7 +221,7 @@ const labels = {
     languages: "Languages",
     beyond: "Beyond work",
     contactEyebrow: "Singapore opportunities",
-    contactTitle: "Open to senior backend and customer-facing engineering roles.",
+    contactTitle: "Open to senior backend, technical leadership, and customer-facing engineering roles.",
     contactCopy: "For a role-aligned discussion, contact Jacky by email, LinkedIn, or WhatsApp.",
     footer: "Evidence-first resume site. Last verified",
     viewLinkedIn: "LinkedIn",
@@ -233,8 +239,7 @@ const labels = {
     languageLabel: "语言",
     eyebrow: "技术领导岗位简介",
     availability: "开放高级工程及技术领导岗位机会",
-    downloadBackend: "下载后端负责人简历",
-    downloadFde: "下载客户交付工程简历",
+    downloadResume: "下载英文简历",
     email: "电子邮件",
     whatsapp: "WhatsApp",
     highlights: "职业亮点",
@@ -256,7 +261,7 @@ const labels = {
     languages: "语言能力",
     beyond: "工作之外",
     contactEyebrow: "新加坡机会",
-    contactTitle: "开放高级后端及客户交付型工程岗位机会。",
+    contactTitle: "开放高级后端、技术领导及客户交付型工程岗位机会。",
     contactCopy: "如需讨论匹配岗位，欢迎通过电子邮件、LinkedIn 或 WhatsApp 联系 Jacky。",
     footer: "以证据为先的职业网站。资料最后核实日期",
     viewLinkedIn: "LinkedIn",
@@ -268,11 +273,12 @@ const printLabels = {
   en: {
     summary: "Professional Summary",
     coreStrengths: "Core Technical Strengths",
+    hybridStrengths: "Core Technical and Delivery Strengths",
     deploymentStrengths: "Deployment and Technical Strengths",
     experience: "Professional Experience",
     aiPrototype: "Applied AI Prototype",
     selectedEvidence: "Selected Engineering Evidence",
-    customerProjects: "Selected Customer Projects",
+    customerProjects: "Independent Customer Projects",
     engineeringScope: "Engineering Scope",
     deploymentScope: "Deployment Scope",
     additional: "Additional Experience and Partnerships",
@@ -284,16 +290,18 @@ const printLabels = {
     pageOne: "Page 1 of 2",
     pageTwo: "Page 2 of 2",
     backendTarget: "Backend Lead Engineer | Technical Lead",
-    fdeTarget: "Forward-Deployed Engineer | Technical Lead"
+    fdeTarget: "Forward-Deployed Engineer | Technical Lead",
+    hybridTarget: "Backend Lead Engineer | Technical Lead"
   },
   zh: {
     summary: "专业简介",
     coreStrengths: "核心技术能力",
+    hybridStrengths: "核心技术与交付能力",
     deploymentStrengths: "部署与技术能力",
     experience: "专业经历",
     aiPrototype: "应用型 AI 原型",
     selectedEvidence: "精选工程证据",
-    customerProjects: "精选客户项目",
+    customerProjects: "独立客户项目",
     engineeringScope: "工程范围",
     deploymentScope: "部署范围",
     additional: "其他经历与合作",
@@ -305,15 +313,18 @@ const printLabels = {
     pageOne: "第 1 页，共 2 页",
     pageTwo: "第 2 页，共 2 页",
     backendTarget: "后端主导工程师 | 技术负责人",
-    fdeTarget: "前线部署工程师 | 技术负责人"
+    fdeTarget: "前线部署工程师 | 技术负责人",
+    hybridTarget: "后端主导工程师 | 技术负责人"
   }
 };
 
 function resumeTarget(variant, lang = "en") {
-  return printLabels[lang][variant === "fde" ? "fdeTarget" : "backendTarget"];
+  const configured = data.variants[variant]?.resumeTitle;
+  return text(configured, lang) || printLabels[lang][`${variant}Target`] || printLabels[lang].backendTarget;
 }
 
 const chineseSkillLabels = new Map([
+  ["REST APIs", "REST API"],
   ["System design", "系统设计"],
   ["Requirements / SRS", "需求分析 / SRS"],
   ["Testing and debugging", "测试与调试"],
@@ -355,25 +366,25 @@ function renderExperience(role, lang, variant) {
 function renderSite(lang = "en") {
   const l = labels[lang];
   const profile = data.profile;
-  const variant = data.variants.backend;
+  const variantId = DEFAULT_VARIANT;
+  const variant = data.variants[variantId];
   const base = lang === "en" ? "" : "../";
   const canonicalPath = lang === "en" ? "/" : "/zh/";
-  const title = lang === "en"
-    ? `${profile.displayName.en} - Backend Lead Engineer & Technical Lead`
-    : `${profile.displayName.zh} - 后端主导工程师及技术负责人`;
+  const title = `${text(profile.displayName, lang)} - ${text(variant.title, lang)}`;
   const description = text(variant.summary, lang);
-  const publicProjects = data.projects.filter((project) => project.public && project.variants.includes("backend"));
-  const customerProjects = data.customerProjects.filter((project) => project.public && project.variants.includes("backend"));
+  const publicProjects = data.projects.filter((project) => project.public && project.variants.includes(variantId));
+  const customerProjects = data.customerProjects.filter((project) => project.public && project.variants.includes(variantId));
+  const activeResumeFilename = data.meta.artifacts.activePdfs.en;
   const languageSwitch = lang === "en"
-    ? `<span aria-current="page">EN</span><span aria-hidden="true">|</span><a href="zh/" lang="zh-CN">简中</a>`
-    : `<a href="../" lang="en">EN</a><span aria-hidden="true">|</span><span aria-current="page">简中</span>`;
+    ? `<span aria-current="page">EN</span><span aria-hidden="true">|</span><a href="zh/index.html" lang="zh-CN">简中</a>`
+    : `<a href="../index.html" lang="en">EN</a><span aria-hidden="true">|</span><span aria-current="page">简中</span>`;
   const resumeNote = lang === "zh"
     ? `<p class="translation-note" role="note">中文内容为待母语审校版本；求职申请请以英文 PDF 为准。</p>`
     : "";
 
   return `<!doctype html>
 <html lang="${lang === "en" ? "en" : "zh-Hans"}">
-<head>${renderMetadata({ lang, canonicalPath, title, description })}
+<head>${renderMetadata({ lang, canonicalPath, title, description, variant: variantId })}
   <link rel="icon" href="${base}assets/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="${base}assets/css/resume-site.css">
 </head>
@@ -401,8 +412,7 @@ function renderSite(lang = "en") {
         <p class="lede">${esc(text(variant.heroSummary, lang))}</p>
         <p class="location-line">${esc(text(profile.location, lang))} <span aria-hidden="true">|</span> ${esc(text(profile.relocation, lang))} <span aria-hidden="true">|</span> ${esc(text(profile.travel, lang))}</p>
         <div class="actions" aria-label="${esc(lang === "zh" ? "简历与联系操作" : "Resume and contact actions")}">
-          <a class="button primary" href="${base}assets/download/Kun-Wai-Chay-Backend-Lead-Engineer.pdf" download>${esc(l.downloadBackend)}</a>
-          <a class="button" href="${base}assets/download/Kun-Wai-Chay-Forward-Deployed-Engineer.pdf" download>${esc(l.downloadFde)}</a>
+          <a class="button primary" href="${base}assets/download/${esc(activeResumeFilename)}" download>${esc(l.downloadResume)}</a>
           <a class="button text" href="${esc(profile.linkedinUrl)}" rel="me">${esc(l.viewLinkedIn)}</a>
           <a class="button text" href="${esc(profile.whatsappUrl)}" rel="me">${esc(l.whatsapp)}</a>
           <a class="button text" href="mailto:${esc(profile.email)}">${esc(l.email)}</a>
@@ -422,7 +432,7 @@ function renderSite(lang = "en") {
         <p class="eyebrow">${esc(l.experienceEyebrow)}</p>
         <h2 id="experience-title">${esc(l.experienceTitle)}</h2>
       </header>
-      <div class="experience-list">${data.experience.map((role) => renderExperience(role, lang, "backend")).join("")}</div>
+      <div class="experience-list">${data.experience.map((role) => renderExperience(role, lang, variantId)).join("")}</div>
     </section>
 
     <section id="customer-projects" class="section" aria-labelledby="customer-projects-title">
@@ -443,7 +453,7 @@ function renderSite(lang = "en") {
         <p class="eyebrow">${esc(l.casesEyebrow)}</p>
         <h2 id="cases-title">${esc(l.casesTitle)}</h2>
       </header>
-      <div class="delivery-grid">${[...data.deliveryCoverage].sort((a, b) => a.priority.backend - b.priority.backend).map((item, index) => `<article><span class="case-number" aria-hidden="true">0${index + 1}</span><h3>${esc(text(item.title, lang))}</h3><p>${esc(text(item.summary, lang))}</p></article>`).join("")}</div>
+      <div class="delivery-grid">${[...data.deliveryCoverage].filter((item) => item.variants.includes(variantId)).sort((a, b) => (a.priority?.[variantId] ?? Number.MAX_SAFE_INTEGER) - (b.priority?.[variantId] ?? Number.MAX_SAFE_INTEGER)).map((item, index) => `<article><span class="case-number" aria-hidden="true">0${index + 1}</span><h3>${esc(text(item.title, lang))}</h3><p>${esc(text(item.summary, lang))}</p></article>`).join("")}</div>
     </section>
 
     ${publicProjects.map((project) => `<section id="ai-prototype" class="section prototype-section" aria-labelledby="prototype-title">
@@ -537,20 +547,28 @@ function renderResume(variant, lang = "en", assetBase = "") {
   const profile = data.profile;
   const role = data.variants[variant];
   const print = printLabels[lang];
+  const isHybrid = variant === "hybrid";
   const title = `${text(profile.displayName, lang)} - ${resumeTarget(variant, lang)}`;
   const cssHref = assetBase ? `${assetBase}/assets/css/resume-print.css` : "../../assets/css/resume-print.css";
-  const coverage = [...data.deliveryCoverage].sort((a, b) => a.priority[variant] - b.priority[variant]);
+  const coverage = [...data.deliveryCoverage].filter((item) => item.variants.includes(variant)).sort((a, b) => (a.priority?.[variant] ?? Number.MAX_SAFE_INTEGER) - (b.priority?.[variant] ?? Number.MAX_SAFE_INTEGER));
   const variantCases = data.caseStudies.filter((item) => item.variants.includes(variant));
   const publicProjects = data.projects.filter((project) => project.public && project.variants.includes(variant));
   const customerProjects = data.customerProjects.filter((project) => project.public && project.variants.includes(variant));
+  const renderedSkills = role.skillGroups.flatMap((group) => [text(group.title, lang), ...group.items.map((item) => skillLabel(item, lang))]);
   const contentTexts = [
     text(role.summary, lang),
+    ...renderedSkills,
     ...data.experience.flatMap((item) => sortedBullets(item, variant).map((bullet) => text(bullet.text, lang))),
+    ...data.experience.flatMap((item) => item.technologies),
     ...customerProjects.flatMap((project) => [text(project.summary, lang), ...project.bullets.map((bullet) => text(bullet.text, lang))]),
+    ...customerProjects.flatMap((project) => project.technologies),
     ...publicProjects.flatMap((project) => [text(project.summary, lang), ...project.phases.map((phase) => text(phase.text, lang)), text(project.statusNote, lang)]),
-    ...variantCases.map((item) => text(item.summary, lang)),
-    ...coverage.map((item) => text(item.summary, lang)),
-    ...data.additionalExperience.flatMap((item) => item.bullets.map((bullet) => text(bullet.text, lang)))
+    ...(isHybrid ? [] : variantCases.map((item) => text(item.summary, lang))),
+    ...(isHybrid ? [] : coverage.map((item) => text(item.summary, lang))),
+    ...data.additionalExperience.flatMap((item) => [text(item.organization, lang), text(item.title, lang), ...item.bullets.map((bullet) => text(bullet.text, lang))]),
+    ...data.education.flatMap((item) => [text(item.credential, lang), text(item.institution, lang)]),
+    ...profile.languages.flatMap((item) => [text(item.name, lang), text(item.level, lang)]),
+    ...(variant === "fde" ? [text(profile.relocation, lang), text(profile.travel, lang)] : [])
   ];
   const allWords = lang === "zh"
     ? contentTexts.join("").replace(/\s/g, "").length
@@ -562,6 +580,7 @@ function renderResume(variant, lang = "en", assetBase = "") {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="${esc(text(role.summary, lang))}">
   <meta name="author" content="${esc(profile.legalName)}">
   <meta name="generator" content="Canonical resume build pipeline">
@@ -579,7 +598,7 @@ function renderResume(variant, lang = "en", assetBase = "") {
         <p>${esc(text(role.summary, lang))}</p>
       </section>
       <section class="resume-section">
-        <h2>${esc(variant === "fde" ? print.deploymentStrengths : print.coreStrengths)}</h2>
+        <h2>${esc(variant === "fde" ? print.deploymentStrengths : (isHybrid ? print.hybridStrengths : print.coreStrengths))}</h2>
         <div class="resume-skill-groups">${role.skillGroups.map((group) => `<p><strong>${esc(text(group.title, lang))}:</strong> ${group.items.map((item) => esc(skillLabel(item, lang))).join(" | ")}</p>`).join("")}</div>
       </section>
       <section class="resume-section resume-experience">
@@ -596,7 +615,7 @@ function renderResume(variant, lang = "en", assetBase = "") {
         <div class="resume-customer-grid">${customerProjects.map((project) => `<article>
           <header><div><h3>${esc(text(project.title, lang))}</h3><p>${esc(text(project.domain, lang))} | ${esc(text(project.label, lang))}</p></div><p class="resume-date">${esc(projectDate(project, lang))}</p></header>
           <p>${esc(text(project.summary, lang))}</p>
-          <p class="resume-tech"><strong>${esc(lang === "zh" ? "技术栈" : "Stack")}:</strong> ${project.technologies.map(esc).join(" | ")}</p>
+${isHybrid && project.bullets?.length ? `          <ul>${project.bullets.filter((bullet) => bullet.status === "verified").map((bullet) => `<li>${esc(text(bullet.text, lang))}</li>`).join("")}</ul>\n` : ""}          <p class="resume-tech"><strong>${esc(lang === "zh" ? "技术栈" : "Stack")}:</strong> ${project.technologies.map(esc).join(" | ")}</p>
         </article>`).join("")}</div>
       </section>
       ${publicProjects.map((project) => `<section class="resume-section resume-project">
@@ -608,14 +627,14 @@ function renderResume(variant, lang = "en", assetBase = "") {
           <p class="resume-project-status">${esc(text(project.statusNote, lang))}</p>
         </article>
       </section>`).join("")}
-      <section class="resume-section">
+      ${isHybrid ? "" : `<section class="resume-section">
         <h2>${esc(print.selectedEvidence)}</h2>
         <div class="resume-case-list">${variantCases.map((item) => `<article><h3>${esc(text(item.title, lang))}</h3><p>${esc(text(item.summary, lang))}</p></article>`).join("")}</div>
       </section>
       <section class="resume-section">
         <h2>${esc(variant === "fde" ? print.deploymentScope : print.engineeringScope)}</h2>
         <div class="resume-coverage">${coverage.map((item) => `<article><h3>${esc(text(item.title, lang))}</h3><p>${esc(text(item.summary, lang))}</p></article>`).join("")}</div>
-      </section>
+      </section>`}
       <section class="resume-section">
         <h2>${esc(print.additional)}</h2>
         <div class="resume-additional">${data.additionalExperience.map((item) => `<article><header><h3>${esc(text(item.organization, lang))}</h3><p class="resume-date">${esc(dateRange(item, lang))}</p></header><p><strong>${esc(text(item.title, lang))}</strong> | ${esc(text(item.location, lang))}</p><ul>${item.bullets.map((bullet) => `<li>${esc(text(bullet.text, lang))}</li>`).join("")}</ul></article>`).join("")}</div>
@@ -649,10 +668,11 @@ async function generateStaticFiles() {
   await Promise.all([
     writeGenerated("index.html", renderSite("en")),
     writeGenerated(path.join("zh", "index.html"), renderSite("zh")),
+    writeGenerated(path.join("resume", "hybrid", "index.html"), renderResume("hybrid")),
     writeGenerated(path.join("resume", "backend", "index.html"), renderResume("backend")),
     writeGenerated(path.join("resume", "fde", "index.html"), renderResume("fde"))
   ]);
-  console.log("Generated English, Simplified Chinese, backend, and FDE static pages.");
+  console.log("Generated English, Simplified Chinese, hybrid, backend, and FDE static pages.");
 }
 
 const MIME_TYPES = {
@@ -702,12 +722,16 @@ async function exportPdfs() {
   const { server, origin } = await startStaticServer();
   const browser = await chromium.launch({ headless: true });
   try {
+    const activePdfs = data.meta.artifacts.activePdfs;
+    const archiveNames = new Set((data.meta.artifacts.archives ?? []).map((archive) => archive.filename));
     const outputs = [
-      ["backend", "Kun-Wai-Chay-Backend-Lead-Engineer.pdf", "en"],
-      ["fde", "Kun-Wai-Chay-Forward-Deployed-Engineer.pdf", "en"],
-      ["backend", "Kun-Wai-Chay-Backend-Lead-Engineer-CN.pdf", "zh"],
-      ["fde", "Kun-Wai-Chay-Forward-Deployed-Engineer-CN.pdf", "zh"]
+      ["hybrid", activePdfs.en, "en"],
+      ["hybrid", activePdfs.zh, "zh"]
     ];
+    assert(outputs.length === 2, "exactly two active PDF exports are required");
+    outputs.forEach(([, filename]) => {
+      assert(filename && !archiveNames.has(filename), `${filename} is not an allowed active PDF destination`);
+    });
     for (const [variant, filename, lang] of outputs) {
       const page = await browser.newPage();
       if (lang === "zh") {
@@ -733,7 +757,7 @@ async function exportPdfs() {
       await page.close();
       console.log(`Exported ${path.relative(ROOT, destination)}.`);
     }
-    console.log("Updated the English and Simplified Chinese role-specific PDF downloads.");
+    console.log("Updated the English and Simplified Chinese hybrid PDF downloads.");
   } finally {
     await browser.close();
     await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));

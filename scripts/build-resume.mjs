@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { copyFile, mkdir, readFile, stat, writeFile } from "node:fs/promises";
+import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -30,7 +30,8 @@ function walk(value, visitor, trail = "data") {
 
 function validateCanonicalData() {
   assert(data.meta?.schemaVersion === 1, "unsupported schema version");
-  assert(data.profile?.legalName && data.profile?.email && data.profile?.phone, "profile identity and contact fields are required");
+  assert(data.profile?.legalName && data.profile?.email && data.profile?.phone && data.profile?.whatsappUrl, "profile identity and contact fields are required");
+  assert(/^https:\/\/wa\.me\/\d+$/.test(data.profile.whatsappUrl), "WhatsApp URL must use a wa.me number link");
   assert(data.variants?.backend && data.variants?.fde, "both backend and fde variants are required");
   for (const variant of Object.values(data.variants)) {
     assert(variant.heroSummary?.en && variant.heroSummary?.zh, "each role variant requires a bilingual hero summary");
@@ -180,6 +181,7 @@ const labels = {
     downloadBackend: "Download Backend Lead Resume",
     downloadFde: "Download FDE Resume",
     email: "Email",
+    whatsapp: "WhatsApp",
     highlights: "Professional highlights",
     experienceEyebrow: "Professional experience",
     experienceTitle: "Engineering ownership from discovery to operational readiness",
@@ -197,7 +199,7 @@ const labels = {
     beyond: "Beyond work",
     contactEyebrow: "Singapore opportunities",
     contactTitle: "Open to senior backend and customer-facing engineering roles.",
-    contactCopy: "For a role-aligned discussion, contact Jacky by email or LinkedIn.",
+    contactCopy: "For a role-aligned discussion, contact Jacky by email, LinkedIn, or WhatsApp.",
     footer: "Evidence-first resume site. Last verified",
     viewLinkedIn: "LinkedIn",
     backTop: "Back to top"
@@ -217,6 +219,7 @@ const labels = {
     downloadBackend: "下载后端负责人简历",
     downloadFde: "下载客户交付工程简历",
     email: "电子邮件",
+    whatsapp: "WhatsApp",
     highlights: "职业亮点",
     experienceEyebrow: "专业经历",
     experienceTitle: "从需求调研到上线准备的工程责任",
@@ -234,12 +237,59 @@ const labels = {
     beyond: "工作之外",
     contactEyebrow: "新加坡机会",
     contactTitle: "开放高级后端及客户交付型工程岗位机会。",
-    contactCopy: "如需讨论匹配岗位，欢迎通过电子邮件或 LinkedIn 联系 Jacky。",
+    contactCopy: "如需讨论匹配岗位，欢迎通过电子邮件、LinkedIn 或 WhatsApp 联系 Jacky。",
     footer: "以证据为先的职业网站。资料最后核实日期",
     viewLinkedIn: "LinkedIn",
     backTop: "返回顶部"
   }
 };
+
+const printLabels = {
+  en: {
+    summary: "Professional Summary",
+    coreStrengths: "Core Technical Strengths",
+    deploymentStrengths: "Deployment and Technical Strengths",
+    experience: "Professional Experience",
+    aiPrototype: "Applied AI Prototype",
+    selectedEvidence: "Selected Engineering Evidence",
+    engineeringScope: "Engineering Scope",
+    deploymentScope: "Deployment Scope",
+    additional: "Additional Experience and Partnerships",
+    education: "Education",
+    languages: "Languages",
+    mobility: "Mobility",
+    technologyDomain: "Technology and domain",
+    directEmployee: "Direct employee",
+    pageOne: "Page 1 of 2",
+    pageTwo: "Page 2 of 2",
+    backendTarget: "Backend Lead Engineer | Technical Lead",
+    fdeTarget: "Forward-Deployed Engineer | Technical Lead"
+  },
+  zh: {
+    summary: "专业简介",
+    coreStrengths: "核心技术能力",
+    deploymentStrengths: "部署与技术能力",
+    experience: "专业经历",
+    aiPrototype: "应用型 AI 原型",
+    selectedEvidence: "精选工程证据",
+    engineeringScope: "工程范围",
+    deploymentScope: "部署范围",
+    additional: "其他经历与合作",
+    education: "教育背景",
+    languages: "语言能力",
+    mobility: "出差与迁移",
+    technologyDomain: "技术与领域",
+    directEmployee: "正式雇员",
+    pageOne: "第 1 页，共 2 页",
+    pageTwo: "第 2 页，共 2 页",
+    backendTarget: "后端主导工程师 | 技术负责人",
+    fdeTarget: "前线部署工程师 | 技术负责人"
+  }
+};
+
+function resumeTarget(variant, lang = "en") {
+  return printLabels[lang][variant === "fde" ? "fdeTarget" : "backendTarget"];
+}
 
 function renderExperience(role, lang, variant) {
   const l = labels[lang];
@@ -308,6 +358,7 @@ function renderSite(lang = "en") {
           <a class="button primary" href="${base}assets/download/Kun-Wai-Chay-Backend-Lead-Engineer.pdf" download>${esc(l.downloadBackend)}</a>
           <a class="button" href="${base}assets/download/Kun-Wai-Chay-Forward-Deployed-Engineer.pdf" download>${esc(l.downloadFde)}</a>
           <a class="button text" href="${esc(profile.linkedinUrl)}" rel="me">${esc(l.viewLinkedIn)}</a>
+          <a class="button text" href="${esc(profile.whatsappUrl)}" rel="me">${esc(l.whatsapp)}</a>
           <a class="button text" href="mailto:${esc(profile.email)}">${esc(l.email)}</a>
         </div>${resumeNote ? `\n        ${resumeNote}` : ""}
       </div>
@@ -384,7 +435,7 @@ function renderSite(lang = "en") {
       <p class="eyebrow">${esc(l.contactEyebrow)}</p>
       <h2 id="contact-title">${esc(l.contactTitle)}</h2>
       <p>${esc(l.contactCopy)}</p>
-      <div class="contact-links"><a href="mailto:${esc(profile.email)}">${esc(profile.email)}</a><a href="${esc(profile.linkedinUrl)}" rel="me">${esc(profile.linkedinLabel)}</a></div>
+      <div class="contact-links"><a href="mailto:${esc(profile.email)}">${esc(profile.email)}</a><a href="${esc(profile.linkedinUrl)}" rel="me">${esc(profile.linkedinLabel)}</a><a href="${esc(profile.whatsappUrl)}" rel="me">${esc(l.whatsapp)}</a></div>
     </section>
   </main>
 
@@ -393,105 +444,125 @@ function renderSite(lang = "en") {
 </html>`;
 }
 
-function renderResumeHeader(variant) {
+function renderResumeHeader(variant, lang = "en", assetBase = "") {
   const profile = data.profile;
+  const print = printLabels[lang];
+  const portraitSrc = assetBase ? `${assetBase}/assets/img/profile-img-800.webp` : "../../assets/img/profile-img-800.webp";
   return `<header class="resume-header">
-    <h1>${esc(profile.displayName.en)}</h1>
-    <p class="resume-target">${esc(data.variants[variant].resumeTitle)}</p>
-    <p class="resume-location">${esc(profile.location.en)} | ${esc(profile.relocation.en)} | ${esc(profile.travel.en)}</p>
-    <div class="resume-contact" aria-label="Contact details">
-      <a href="mailto:${esc(profile.email)}">${esc(profile.email)}</a>
-      <a href="${esc(profile.phoneHref)}">${esc(profile.phone)}</a>
-      <a href="${esc(profile.linkedinUrl)}">${esc(profile.linkedinLabel)}</a>
-      <a href="${esc(profile.portfolioUrl)}">${esc(profile.portfolioLabel)}</a>
+    <div class="resume-header-content">
+      <h1>${esc(text(profile.displayName, lang))}</h1>
+      <p class="resume-target">${esc(resumeTarget(variant, lang))}</p>
+      <p class="resume-location">${esc(text(profile.location, lang))} | ${esc(text(profile.relocation, lang))} | ${esc(text(profile.travel, lang))}</p>
+      <div class="resume-contact" aria-label="Contact details">
+        <a href="mailto:${esc(profile.email)}">${esc(profile.email)}</a>
+        <a href="${esc(profile.phoneHref)}">${esc(profile.phone)}</a>
+        <a href="${esc(profile.linkedinUrl)}">${esc(profile.linkedinLabel)}</a>
+        <a href="${esc(profile.whatsappUrl)}">${esc(profile.whatsappLabel)}</a>
+        <a href="${esc(profile.portfolioUrl)}">${esc(profile.portfolioLabel)}</a>
+      </div>
     </div>
+    <img class="resume-header-photo" src="${portraitSrc}" width="800" height="990" loading="eager" decoding="async" alt="${esc(lang === "zh" ? "谢官韦（Jacky）的职业照片" : "Professional portrait of Chay Kun Wai (Jacky)")}">
   </header>`;
 }
 
-function renderCompactExperience(role, variant) {
+function renderCompactExperience(role, variant, lang = "en") {
+  const print = printLabels[lang];
   return `<article class="resume-role">
-    <header><div><h3>${esc(text(role.company))}</h3><p>${esc(text(role.title))} | ${esc(text(role.location))}${role.relationship === "direct-employment" ? " | Direct employee" : ""}</p></div><p class="resume-date">${esc(dateRange(role))}</p></header>
-    <ul>${sortedBullets(role, variant).map((bullet) => `<li>${esc(text(bullet.text))}</li>`).join("")}</ul>
-    <p class="resume-tech"><strong>Technology and domain:</strong> ${role.technologies.map(esc).join(" | ")}</p>
+    <header><div><h3>${esc(text(role.company, lang))}</h3><p>${esc(text(role.title, lang))} | ${esc(text(role.location, lang))}${role.relationship === "direct-employment" ? ` | ${esc(print.directEmployee)}` : ""}</p></div><p class="resume-date">${esc(dateRange(role, lang))}</p></header>
+    <ul>${sortedBullets(role, variant).map((bullet) => `<li>${esc(text(bullet.text, lang))}</li>`).join("")}</ul>
+    <p class="resume-tech"><strong>${esc(print.technologyDomain)}:</strong> ${role.technologies.map(esc).join(" | ")}</p>
   </article>`;
 }
 
-function renderResume(variant) {
+function renderResume(variant, lang = "en", assetBase = "") {
   const profile = data.profile;
   const role = data.variants[variant];
-  const title = `${profile.displayName.en} - ${role.resumeTitle}`;
+  const print = printLabels[lang];
+  const title = `${text(profile.displayName, lang)} - ${resumeTarget(variant, lang)}`;
+  const cssHref = assetBase ? `${assetBase}/assets/css/resume-print.css` : "../../assets/css/resume-print.css";
   const coverage = [...data.deliveryCoverage].sort((a, b) => a.priority[variant] - b.priority[variant]);
   const variantCases = data.caseStudies.filter((item) => item.variants.includes(variant));
   const publicProjects = data.projects.filter((project) => project.public && project.variants.includes(variant));
-  const allWords = [role.summary.en, ...data.experience.flatMap((item) => sortedBullets(item, variant).map((bullet) => bullet.text.en)), ...publicProjects.flatMap((project) => [project.summary.en, ...project.phases.map((phase) => phase.text.en), project.statusNote.en]), ...variantCases.map((item) => item.summary.en), ...coverage.map((item) => item.summary.en), ...data.additionalExperience.flatMap((item) => item.bullets.map((bullet) => bullet.text.en))].join(" ").trim().split(/\s+/).length;
+  const contentTexts = [
+    text(role.summary, lang),
+    ...data.experience.flatMap((item) => sortedBullets(item, variant).map((bullet) => text(bullet.text, lang))),
+    ...publicProjects.flatMap((project) => [text(project.summary, lang), ...project.phases.map((phase) => text(phase.text, lang)), text(project.statusNote, lang)]),
+    ...variantCases.map((item) => text(item.summary, lang)),
+    ...coverage.map((item) => text(item.summary, lang)),
+    ...data.additionalExperience.flatMap((item) => item.bullets.map((bullet) => text(bullet.text, lang)))
+  ];
+  const allWords = lang === "zh"
+    ? contentTexts.join("").replace(/\s/g, "").length
+    : contentTexts.join(" ").trim().split(/\s+/).length;
+  const documentLang = lang === "zh" ? "zh-Hans" : "en";
 
   return `<!doctype html>
-<html lang="en">
+<html lang="${documentLang}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="${esc(role.summary.en)}">
+  <meta name="description" content="${esc(text(role.summary, lang))}">
   <meta name="author" content="${esc(profile.legalName)}">
   <meta name="generator" content="Canonical resume build pipeline">
   <title>${esc(title)}</title>
   <link rel="canonical" href="${BASE_URL}/resume/${variant}/">
-  <link rel="stylesheet" href="../../assets/css/resume-print.css">
+  <link rel="stylesheet" href="${cssHref}">
 </head>
-<body data-variant="${esc(variant)}" data-core-word-count="${allWords}">
+<body data-variant="${esc(variant)}" data-language="${esc(lang)}" data-core-word-count="${allWords}">
   <!-- ${GENERATED_NOTICE} -->
   <main class="resume-document">
-    <section class="resume-sheet" aria-label="Page 1 of 2">
-      ${renderResumeHeader(variant)}
+    <section class="resume-sheet" aria-label="${esc(print.pageOne)}">
+      ${renderResumeHeader(variant, lang, assetBase)}
       <section class="resume-section resume-summary">
-        <h2>Professional Summary</h2>
-        <p>${esc(role.summary.en)}</p>
+        <h2>${esc(print.summary)}</h2>
+        <p>${esc(text(role.summary, lang))}</p>
       </section>
       <section class="resume-section">
-        <h2>${variant === "fde" ? "Deployment and Technical Strengths" : "Core Technical Strengths"}</h2>
-        <div class="resume-skill-groups">${role.skillGroups.map((group) => `<p><strong>${esc(group.title.en)}:</strong> ${group.items.map(esc).join(" | ")}</p>`).join("")}</div>
+        <h2>${esc(variant === "fde" ? print.deploymentStrengths : print.coreStrengths)}</h2>
+        <div class="resume-skill-groups">${role.skillGroups.map((group) => `<p><strong>${esc(text(group.title, lang))}:</strong> ${group.items.map(esc).join(" | ")}</p>`).join("")}</div>
       </section>
       <section class="resume-section resume-experience">
-        <h2>Professional Experience</h2>
-        ${data.experience.map((item) => renderCompactExperience(item, variant)).join("")}
+        <h2>${esc(print.experience)}</h2>
+        ${data.experience.map((item) => renderCompactExperience(item, variant, lang)).join("")}
       </section>
-      <p class="page-number" aria-hidden="true">1 / 2</p>
+      <p class="page-number" aria-hidden="true">${esc(print.pageOne)}</p>
     </section>
 
-    <section class="resume-sheet" aria-label="Page 2 of 2">
-      <div class="resume-continuation"><strong>${esc(profile.displayName.en)}</strong><span>${esc(role.resumeTitle)}</span></div>
+    <section class="resume-sheet" aria-label="${esc(print.pageTwo)}">
+      <div class="resume-continuation"><strong>${esc(text(profile.displayName, lang))}</strong><span>${esc(resumeTarget(variant, lang))}</span></div>
       ${publicProjects.map((project) => `<section class="resume-section resume-project">
-        <h2>Applied AI Prototype</h2>
+        <h2>${esc(print.aiPrototype)}</h2>
         <article>
-          <header><h3>${esc(project.label.en)}</h3><p>${esc(project.stage.en)}</p></header>
-          <p>${esc(project.summary.en)}</p>
-          <ul>${project.phases.map((phase) => `<li><strong>${esc(phase.title.en)}:</strong> ${esc(phase.text.en)}</li>`).join("")}</ul>
-          <p class="resume-project-status">${esc(project.statusNote.en)}</p>
+          <header><h3>${esc(text(project.label, lang))}</h3><p>${esc(text(project.stage, lang))}</p></header>
+          <p>${esc(text(project.summary, lang))}</p>
+          <ul>${project.phases.map((phase) => `<li><strong>${esc(text(phase.title, lang))}:</strong> ${esc(text(phase.text, lang))}</li>`).join("")}</ul>
+          <p class="resume-project-status">${esc(text(project.statusNote, lang))}</p>
         </article>
       </section>`).join("")}
       <section class="resume-section">
-        <h2>Selected Engineering Evidence</h2>
-        <div class="resume-case-list">${variantCases.map((item) => `<article><h3>${esc(item.title.en)}</h3><p>${esc(item.summary.en)}</p></article>`).join("")}</div>
+        <h2>${esc(print.selectedEvidence)}</h2>
+        <div class="resume-case-list">${variantCases.map((item) => `<article><h3>${esc(text(item.title, lang))}</h3><p>${esc(text(item.summary, lang))}</p></article>`).join("")}</div>
       </section>
       <section class="resume-section">
-        <h2>${variant === "fde" ? "Deployment Scope" : "Engineering Scope"}</h2>
-        <div class="resume-coverage">${coverage.map((item) => `<article><h3>${esc(item.title.en)}</h3><p>${esc(item.summary.en)}</p></article>`).join("")}</div>
+        <h2>${esc(variant === "fde" ? print.deploymentScope : print.engineeringScope)}</h2>
+        <div class="resume-coverage">${coverage.map((item) => `<article><h3>${esc(text(item.title, lang))}</h3><p>${esc(text(item.summary, lang))}</p></article>`).join("")}</div>
       </section>
       <section class="resume-section">
-        <h2>Additional Experience and Partnerships</h2>
-        <div class="resume-additional">${data.additionalExperience.map((item) => `<article><header><h3>${esc(item.organization.en)}</h3><p class="resume-date">${esc(dateRange(item))}</p></header><p><strong>${esc(item.title.en)}</strong> | ${esc(item.location.en)}</p><ul>${item.bullets.map((bullet) => `<li>${esc(bullet.text.en)}</li>`).join("")}</ul></article>`).join("")}</div>
+        <h2>${esc(print.additional)}</h2>
+        <div class="resume-additional">${data.additionalExperience.map((item) => `<article><header><h3>${esc(text(item.organization, lang))}</h3><p class="resume-date">${esc(dateRange(item, lang))}</p></header><p><strong>${esc(text(item.title, lang))}</strong> | ${esc(text(item.location, lang))}</p><ul>${item.bullets.map((bullet) => `<li>${esc(text(bullet.text, lang))}</li>`).join("")}</ul></article>`).join("")}</div>
       </section>
       <section class="resume-bottom-grid">
         <article class="resume-section">
-          <h2>Education</h2>
-          ${data.education.map((item) => `<div class="resume-credential"><h3>${esc(item.credential.en)}</h3><p>${esc(item.institution.en)} | ${esc(item.end)}</p></div>`).join("")}
+          <h2>${esc(print.education)}</h2>
+          ${data.education.map((item) => `<div class="resume-credential"><h3>${esc(text(item.credential, lang))}</h3><p>${esc(text(item.institution, lang))} | ${esc(item.end)}</p></div>`).join("")}
         </article>
         <article class="resume-section">
-          <h2>Languages</h2>
-          <p>${profile.languages.map((item) => `${esc(item.name.en)} (${esc(item.level.en)})`).join(" | ")}</p>
-          ${variant === "fde" ? `<p class="travel-note"><strong>Mobility:</strong> ${esc(profile.relocation.en)} | ${esc(profile.travel.en)}</p>` : ""}
+          <h2>${esc(print.languages)}</h2>
+          <p>${profile.languages.map((item) => `${esc(text(item.name, lang))} (${esc(text(item.level, lang))})`).join(" | ")}</p>
+          ${variant === "fde" ? `<p class="travel-note"><strong>${esc(print.mobility)}:</strong> ${esc(text(profile.relocation, lang))} | ${esc(text(profile.travel, lang))}</p>` : ""}
         </article>
       </section>
-      <p class="page-number" aria-hidden="true">2 / 2</p>
+      <p class="page-number" aria-hidden="true">${esc(print.pageTwo)}</p>
     </section>
   </main>
 </body>
@@ -563,17 +634,23 @@ async function exportPdfs() {
   const browser = await chromium.launch({ headless: true });
   try {
     const outputs = [
-      ["backend", "Kun-Wai-Chay-Backend-Lead-Engineer.pdf"],
-      ["fde", "Kun-Wai-Chay-Forward-Deployed-Engineer.pdf"]
+      ["backend", "Kun-Wai-Chay-Backend-Lead-Engineer.pdf", "en"],
+      ["fde", "Kun-Wai-Chay-Forward-Deployed-Engineer.pdf", "en"],
+      ["backend", "Kun-Wai-Chay-Backend-Lead-Engineer-CN.pdf", "zh"],
+      ["fde", "Kun-Wai-Chay-Forward-Deployed-Engineer-CN.pdf", "zh"]
     ];
-    for (const [variant, filename] of outputs) {
+    for (const [variant, filename, lang] of outputs) {
       const page = await browser.newPage();
-      await page.goto(`${origin}/resume/${variant}/`, { waitUntil: "networkidle" });
+      if (lang === "zh") {
+        await page.setContent(renderResume(variant, lang, origin), { waitUntil: "networkidle" });
+      } else {
+        await page.goto(`${origin}/resume/${variant}/`, { waitUntil: "networkidle" });
+      }
       await page.emulateMedia({ media: "print" });
       await page.evaluate(() => document.fonts.ready);
       const sheetMetrics = await page.locator(".resume-sheet").evaluateAll((sheets) => sheets.map((sheet) => ({ clientHeight: sheet.clientHeight, scrollHeight: sheet.scrollHeight })));
-      assert(sheetMetrics.length === 2, `${variant} print page must contain exactly two explicit sheets`);
-      sheetMetrics.forEach((metric, index) => assert(metric.scrollHeight <= metric.clientHeight + 2, `${variant} page ${index + 1} overflows its A4 sheet`));
+      assert(sheetMetrics.length === 2, `${variant}/${lang} print page must contain exactly two explicit sheets`);
+      sheetMetrics.forEach((metric, index) => assert(metric.scrollHeight <= metric.clientHeight + 2, `${variant}/${lang} page ${index + 1} overflows its A4 sheet`));
       const destination = path.join(ROOT, "assets", "download", filename);
       await page.pdf({
         path: destination,
@@ -587,11 +664,7 @@ async function exportPdfs() {
       await page.close();
       console.log(`Exported ${path.relative(ROOT, destination)}.`);
     }
-    const backendSource = path.join(ROOT, "assets", "download", "Kun-Wai-Chay-Backend-Lead-Engineer.pdf");
-    for (const alias of ["Kun-Wai-Chay-Senior-Backend-Engineer.pdf", "Chay Kun Wai - Resume.pdf"]) {
-      await copyFile(backendSource, path.join(ROOT, "assets", "download", alias));
-    }
-    console.log("Updated the backend compatibility aliases with byte-identical copies.");
+    console.log("Updated the English and Simplified Chinese role-specific PDF downloads.");
   } finally {
     await browser.close();
     await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));

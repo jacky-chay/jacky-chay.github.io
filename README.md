@@ -12,9 +12,10 @@ This repository publishes an evidence-first English and Simplified Chinese profe
 Stable downloads:
 
 - `assets/download/Kun-Wai-Chay-Backend-Lead-Engineer.pdf` - canonical backend lead resume
-- `assets/download/Kun-Wai-Chay-Senior-Backend-Engineer.pdf` - byte-identical senior-title compatibility alias
 - `assets/download/Kun-Wai-Chay-Forward-Deployed-Engineer.pdf`
-- `assets/download/Chay Kun Wai - Resume.pdf` - byte-identical legacy backend compatibility alias
+- `assets/download/Kun-Wai-Chay-Backend-Lead-Engineer-CN.pdf` - generated Simplified Chinese backend lead resume
+- `assets/download/Kun-Wai-Chay-Forward-Deployed-Engineer-CN.pdf` - generated Simplified Chinese FDE resume
+- `assets/download/Chay Kun Wai - Resume - CN.pdf` - existing Simplified Chinese resume
 
 ## Source of truth
 
@@ -41,9 +42,9 @@ npm run build
 npm run verify
 ```
 
-`npm run build` generates the static pages, exports both two-page A4 PDFs with Playwright Chromium, and refreshes both byte-identical backend compatibility aliases.
+`npm run build` generates the static pages and exports four role-specific two-page A4 PDFs in English and Simplified Chinese with Playwright Chromium. Existing manually maintained downloads are left untouched.
 
-`npm run verify` checks canonical claims, content rules, local and external links, responsive layouts at 390x844, 768x1024, and 1440x900, portrait aspect-ratio regression, keyboard focus, image accessibility, Lighthouse thresholds, A4 PDF structure, extracted text order, metadata, hyperlinks, page counts, file sizes, and backend-alias byte identity.
+`npm run verify` checks canonical claims, content rules, local and external links, responsive layouts at 390x844, 768x1024, and 1440x900, portrait aspect-ratio regression, keyboard focus, image accessibility, Lighthouse thresholds, A4 PDF structure, extracted text order, metadata, hyperlinks, page counts, and file sizes.
 
 ## Manual release gates
 

@@ -61,6 +61,16 @@ function validateCanonicalData() {
   assert(netease?.type === "external-kol-partnership" && netease.start === "2022", "NetEase must remain an external/KOL partnership from 2022");
   assert(sirius?.type === "founder" && sirius.start === "2021" && sirius.end === "2024", "Sirius Lab relationship or dates differ from the verified record");
 
+  assert(Array.isArray(data.customerProjects) && data.customerProjects.length === 2, "two verified independent customer projects are required");
+  for (const project of data.customerProjects) {
+    assert(project.status === "verified" && project.public === true && project.confidential === true, `${project.id} must be a verified, anonymized public summary`);
+    assert(project.relationship === "independent-customer-delivery", `${project.id} must remain an independent customer delivery`);
+    assert(project.start && project.end && project.title?.en && project.title?.zh, `${project.id} requires dates and bilingual title fields`);
+    assert(project.technologies?.includes("Angular") && project.technologies?.includes("React") && project.technologies?.includes("Java EE") && project.technologies?.includes("WildFly") && project.technologies?.includes("PostgreSQL"), `${project.id} is missing its verified technology stack`);
+    assert(project.commercialNote?.status === "private-summary", `${project.id} must keep commercial terms private`);
+    for (const bullet of project.bullets ?? []) assert(bullet.status === "verified", `${project.id}/${bullet.id} is not verified`);
+  }
+
   for (const claim of [...data.experience, ...data.caseStudies, ...data.additionalExperience, ...data.deliveryCoverage, ...data.education]) {
     assert(claim.status === "verified", `${claim.id ?? claim.credential?.en ?? "claim"} is not verified for public output`);
   }
@@ -110,6 +120,10 @@ function monthYear(value, lang = "en") {
 
 function dateRange(item, lang = "en") {
   return `${monthYear(item.start, lang)} - ${monthYear(item.end, lang)}`;
+}
+
+function projectDate(item, lang = "en") {
+  return item.start === item.end ? monthYear(item.start, lang) : dateRange(item, lang);
 }
 
 function publicEntityLabel(entity, lang) {
@@ -194,6 +208,9 @@ const labels = {
     skillsTitle: "Focused, interview-defensible strengths",
     additionalEyebrow: "Additional experience",
     additionalTitle: "Partnership and independent work",
+    customerProjectsEyebrow: "Independent customer projects",
+    customerProjectsTitle: "Closed-source systems delivered end to end",
+    customerProjectStack: "Stack",
     education: "Education",
     languages: "Languages",
     beyond: "Beyond work",
@@ -232,6 +249,9 @@ const labels = {
     skillsTitle: "精简且可在面试中深入说明的技术能力",
     additionalEyebrow: "其他经历",
     additionalTitle: "外部合作与独立项目",
+    customerProjectsEyebrow: "独立客户项目",
+    customerProjectsTitle: "端到端交付的闭源系统",
+    customerProjectStack: "技术栈",
     education: "教育背景",
     languages: "语言能力",
     beyond: "工作之外",
@@ -252,6 +272,7 @@ const printLabels = {
     experience: "Professional Experience",
     aiPrototype: "Applied AI Prototype",
     selectedEvidence: "Selected Engineering Evidence",
+    customerProjects: "Selected Customer Projects",
     engineeringScope: "Engineering Scope",
     deploymentScope: "Deployment Scope",
     additional: "Additional Experience and Partnerships",
@@ -272,6 +293,7 @@ const printLabels = {
     experience: "专业经历",
     aiPrototype: "应用型 AI 原型",
     selectedEvidence: "精选工程证据",
+    customerProjects: "精选客户项目",
     engineeringScope: "工程范围",
     deploymentScope: "部署范围",
     additional: "其他经历与合作",
@@ -289,6 +311,29 @@ const printLabels = {
 
 function resumeTarget(variant, lang = "en") {
   return printLabels[lang][variant === "fde" ? "fdeTarget" : "backendTarget"];
+}
+
+const chineseSkillLabels = new Map([
+  ["System design", "系统设计"],
+  ["Requirements / SRS", "需求分析 / SRS"],
+  ["Testing and debugging", "测试与调试"],
+  ["Code review", "代码审查"],
+  ["Warehouse automation", "仓储自动化"],
+  ["Commissioning", "上线调试"],
+  ["Mentoring", "工程师辅导"],
+  ["Technical interviews", "技术面试"],
+  ["Customer workshops", "客户研讨"],
+  ["Technical scoping", "技术范围界定"],
+  ["Delivery risk coordination", "交付风险协调"],
+  ["RAG prototyping", "RAG 原型开发"],
+  ["English", "英语"],
+  ["Mandarin", "普通话"],
+  ["Cantonese", "粤语"],
+  ["Malay", "马来语"]
+]);
+
+function skillLabel(value, lang = "en") {
+  return lang === "zh" ? chineseSkillLabels.get(value) ?? value : value;
 }
 
 function renderExperience(role, lang, variant) {
@@ -318,6 +363,7 @@ function renderSite(lang = "en") {
     : `${profile.displayName.zh} - 后端主导工程师及技术负责人`;
   const description = text(variant.summary, lang);
   const publicProjects = data.projects.filter((project) => project.public && project.variants.includes("backend"));
+  const customerProjects = data.customerProjects.filter((project) => project.public && project.variants.includes("backend"));
   const languageSwitch = lang === "en"
     ? `<span aria-current="page">EN</span><span aria-hidden="true">|</span><a href="zh/" lang="zh-CN">简中</a>`
     : `<a href="../" lang="en">EN</a><span aria-hidden="true">|</span><span aria-current="page">简中</span>`;
@@ -379,6 +425,19 @@ function renderSite(lang = "en") {
       <div class="experience-list">${data.experience.map((role) => renderExperience(role, lang, "backend")).join("")}</div>
     </section>
 
+    <section id="customer-projects" class="section" aria-labelledby="customer-projects-title">
+      <header class="section-heading">
+        <p class="eyebrow">${esc(l.customerProjectsEyebrow)}</p>
+        <h2 id="customer-projects-title">${esc(l.customerProjectsTitle)}</h2>
+      </header>
+      <div class="customer-project-grid">${customerProjects.map((project) => `<article class="customer-project-card">
+        <header class="customer-project-heading"><div><p class="role-meta">${esc(projectDate(project, lang))}</p><h3>${esc(text(project.title, lang))}</h3><p class="customer-project-domain">${esc(text(project.domain, lang))}</p></div><span>${esc(text(project.label, lang))}</span></header>
+        <p>${esc(text(project.summary, lang))}</p>
+        <ul>${project.bullets.map((bullet) => `<li>${esc(text(bullet.text, lang))}</li>`).join("")}</ul>
+        <p class="technology-line"><strong>${esc(l.customerProjectStack)}:</strong> ${project.technologies.map(esc).join(" | ")}</p>
+      </article>`).join("")}</div>
+    </section>
+
     <section id="delivery-evidence" class="section section-tint" aria-labelledby="cases-title">
       <header class="section-heading">
         <p class="eyebrow">${esc(l.casesEyebrow)}</p>
@@ -407,7 +466,7 @@ function renderSite(lang = "en") {
         <p class="eyebrow">${esc(l.skillsEyebrow)}</p>
         <h2 id="skills-title">${esc(l.skillsTitle)}</h2>
       </header>
-      <div class="skill-groups">${variant.skillGroups.map((group) => `<article><h3>${esc(text(group.title, lang))}</h3><ul class="tag-list">${group.items.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></article>`).join("")}</div>
+      <div class="skill-groups">${variant.skillGroups.map((group) => `<article><h3>${esc(text(group.title, lang))}</h3><ul class="tag-list">${group.items.map((item) => `<li>${esc(skillLabel(item, lang))}</li>`).join("")}</ul></article>`).join("")}</div>
     </section>
 
     <section class="section" aria-labelledby="additional-title">
@@ -483,9 +542,11 @@ function renderResume(variant, lang = "en", assetBase = "") {
   const coverage = [...data.deliveryCoverage].sort((a, b) => a.priority[variant] - b.priority[variant]);
   const variantCases = data.caseStudies.filter((item) => item.variants.includes(variant));
   const publicProjects = data.projects.filter((project) => project.public && project.variants.includes(variant));
+  const customerProjects = data.customerProjects.filter((project) => project.public && project.variants.includes(variant));
   const contentTexts = [
     text(role.summary, lang),
     ...data.experience.flatMap((item) => sortedBullets(item, variant).map((bullet) => text(bullet.text, lang))),
+    ...customerProjects.flatMap((project) => [text(project.summary, lang), ...project.bullets.map((bullet) => text(bullet.text, lang))]),
     ...publicProjects.flatMap((project) => [text(project.summary, lang), ...project.phases.map((phase) => text(phase.text, lang)), text(project.statusNote, lang)]),
     ...variantCases.map((item) => text(item.summary, lang)),
     ...coverage.map((item) => text(item.summary, lang)),
@@ -519,7 +580,7 @@ function renderResume(variant, lang = "en", assetBase = "") {
       </section>
       <section class="resume-section">
         <h2>${esc(variant === "fde" ? print.deploymentStrengths : print.coreStrengths)}</h2>
-        <div class="resume-skill-groups">${role.skillGroups.map((group) => `<p><strong>${esc(text(group.title, lang))}:</strong> ${group.items.map(esc).join(" | ")}</p>`).join("")}</div>
+        <div class="resume-skill-groups">${role.skillGroups.map((group) => `<p><strong>${esc(text(group.title, lang))}:</strong> ${group.items.map((item) => esc(skillLabel(item, lang))).join(" | ")}</p>`).join("")}</div>
       </section>
       <section class="resume-section resume-experience">
         <h2>${esc(print.experience)}</h2>
@@ -530,6 +591,14 @@ function renderResume(variant, lang = "en", assetBase = "") {
 
     <section class="resume-sheet" aria-label="${esc(print.pageTwo)}">
       <div class="resume-continuation"><strong>${esc(text(profile.displayName, lang))}</strong><span>${esc(resumeTarget(variant, lang))}</span></div>
+      <section class="resume-section resume-customer-projects">
+        <h2>${esc(print.customerProjects)}</h2>
+        <div class="resume-customer-grid">${customerProjects.map((project) => `<article>
+          <header><div><h3>${esc(text(project.title, lang))}</h3><p>${esc(text(project.domain, lang))} | ${esc(text(project.label, lang))}</p></div><p class="resume-date">${esc(projectDate(project, lang))}</p></header>
+          <p>${esc(text(project.summary, lang))}</p>
+          <p class="resume-tech"><strong>${esc(lang === "zh" ? "技术栈" : "Stack")}:</strong> ${project.technologies.map(esc).join(" | ")}</p>
+        </article>`).join("")}</div>
+      </section>
       ${publicProjects.map((project) => `<section class="resume-section resume-project">
         <h2>${esc(print.aiPrototype)}</h2>
         <article>

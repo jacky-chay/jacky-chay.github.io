@@ -668,6 +668,110 @@
       ]
     }
   ],
+  "customerProjects": [
+    {
+      "id": "manualwarehouse-wms",
+      "status": "verified",
+      "public": true,
+      "confidential": true,
+      "relationship": "independent-customer-delivery",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "start": "2026-08",
+      "end": "2026-08",
+      "title": {
+        "en": "ManualWarehouse WMS",
+        "zh": "ManualWarehouse 仓储管理系统"
+      },
+      "domain": {
+        "en": "F&B manufacturing warehouse (anonymized)",
+        "zh": "食品饮料制造仓库（客户匿名）"
+      },
+      "label": {
+        "en": "Independent closed-source customer delivery",
+        "zh": "独立闭源客户交付"
+      },
+      "summary": {
+        "en": "Built and commercially delivered a closed-source WMS for an anonymized F&B manufacturing warehouse, covering receiving, picking, inventory allocation, shipping, and upstream REST API integrations.",
+        "zh": "为一家匿名食品饮料制造仓库独立开发并商业交付闭源 WMS，覆盖收货、拣选、库存分配、发运及上游 REST API 集成。"
+      },
+      "bullets": [
+        {
+          "id": "upstream-integration",
+          "status": "verified",
+          "text": {
+            "en": "Implemented REST APIs for communication with upstream systems and deployed the customer-hosted application.",
+            "zh": "实现与上游系统通信的 REST API，并将应用部署至客户服务器。"
+          }
+        }
+      ],
+      "technologies": [
+        "Angular",
+        "React",
+        "Java EE",
+        "WildFly",
+        "PostgreSQL"
+      ],
+      "commercialNote": {
+        "status": "private-summary",
+        "en": "One-time paid customer delivery; commercial amount and customer identity are omitted from public materials.",
+        "zh": "一次性付费客户交付；公开材料不披露商业金额及客户身份。"
+      }
+    },
+    {
+      "id": "dive-center-attendance",
+      "status": "verified",
+      "public": true,
+      "confidential": true,
+      "relationship": "independent-customer-delivery",
+      "variants": [
+        "backend",
+        "fde"
+      ],
+      "start": "2026-06",
+      "end": "2026-06",
+      "title": {
+        "en": "Dive Center Attendance and Billing System",
+        "zh": "潜水中心出勤与账单系统"
+      },
+      "domain": {
+        "en": "Swimming and scuba-diving center (anonymized)",
+        "zh": "游泳及水肺潜水中心（客户匿名）"
+      },
+      "label": {
+        "en": "Independent closed-source customer delivery",
+        "zh": "独立闭源客户交付"
+      },
+      "summary": {
+        "en": "Built and commercially delivered a closed-source attendance and billing system for an anonymized swimming and scuba-diving center, covering student registration, attendance, bill/payment checks, and monthly and custom reports.",
+        "zh": "为一家匿名游泳及水肺潜水中心独立开发并商业交付闭源出勤与账单系统，覆盖学员登记、出勤记录、账单/付款查询及月度和自定义报表。"
+      },
+      "bullets": [
+        {
+          "id": "reporting-deployment",
+          "status": "verified",
+          "text": {
+            "en": "Implemented the customer-facing workflows and deployed the application to the dive center's server for operational use.",
+            "zh": "实现面向客户的业务流程，并将应用部署至潜水中心服务器投入使用。"
+          }
+        }
+      ],
+      "technologies": [
+        "Angular",
+        "React",
+        "Java EE",
+        "WildFly",
+        "PostgreSQL"
+      ],
+      "commercialNote": {
+        "status": "private-summary",
+        "en": "One-time paid customer delivery; commercial amount and customer identity are omitted from public materials.",
+        "zh": "一次性付费客户交付；公开材料不披露商业金额及客户身份。"
+      }
+    }
+  ],
   "education": [
     {
       "status": "verified",

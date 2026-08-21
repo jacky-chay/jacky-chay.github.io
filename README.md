@@ -32,6 +32,8 @@ Evidence safeguards intentionally reject:
 
 The public AI-assisted WMS case study describes only the verified prototype scope. It distinguishes the implemented RAG-based V1 from the planned, unimplemented V2 and explicitly states that the work was internal, unreleased, and has no production-impact claim. The canonical record retains an interview-evidence checklist for the exact model/runtime, retrieval design, evaluation, failure controls, security design, and operating characteristics.
 
+The site and PDFs also include two 2026 independent customer deliveries: an anonymized F&B manufacturing warehouse WMS and an anonymized swimming/scuba-diving-center attendance and billing system. Both are marked as private, closed-source deployments and use only the verified Angular, React, Java EE, WildFly, and PostgreSQL stack. Customer names and exact commercial amounts are intentionally omitted from public materials.
+
 ## Build and verification
 
 Node.js 20 or newer is recommended.

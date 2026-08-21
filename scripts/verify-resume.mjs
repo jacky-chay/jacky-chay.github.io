@@ -67,6 +67,15 @@ async function verifyCanonicalAndHtml() {
     check(project.phases?.some((phase) => phase.kind === "planned-not-implemented" && /planned/i.test(phase.title?.en ?? "")), `${project.id} must distinguish planned V2 from implemented V1.`);
     check(Array.isArray(project.evidenceNeeded) && project.evidenceNeeded.length >= 5, `${project.id} is missing its remaining evidence checklist.`);
   }
+  check(canonical.customerProjects?.length === 2, "The two independent customer project records are missing or duplicated.");
+  for (const project of canonical.customerProjects ?? []) {
+    check(project.status === "verified" && project.public === true && project.confidential === true, `${project.id} must remain a verified anonymized public project.`);
+    check(project.relationship === "independent-customer-delivery", `${project.id} must remain separate from employment history.`);
+    check(project.start && project.end, `${project.id} is missing its verified 2026 date.`);
+    const stack = project.technologies?.join(" ") ?? "";
+    check(["Angular", "React", "Java EE", "WildFly", "PostgreSQL"].every((technology) => stack.includes(technology)), `${project.id} is missing its verified technology stack.`);
+    check(project.commercialNote?.status === "private-summary", `${project.id} must keep commercial terms private.`);
+  }
 
   const canonicalText = JSON.stringify(canonical);
   check(!/\[(?:todo|tbd|placeholder|insert|verify|metric|company|customer|name)[^\]]*\]/i.test(canonicalText), "Canonical data contains a bracketed placeholder.");
@@ -89,8 +98,10 @@ async function verifyCanonicalAndHtml() {
     check(!/facebook|instagram|wechat/i.test(html), `${route.pathname} contains personal social links.`);
     if (route.language === "zh-Hans") {
       check(html.includes("AI 辅助 WMS 故障排查原型") && html.includes("原型 V1") && html.includes("规划中的 V2") && html.includes("内部原型 - 尚未发布"), `${route.pathname} is missing the scoped Chinese AI prototype case study.`);
+      check(html.includes("ManualWarehouse 仓储管理系统") && html.includes("潜水中心出勤与账单系统"), `${route.pathname} is missing the two Chinese independent customer projects.`);
     } else {
       check(html.includes("AI-Assisted WMS Troubleshooting Prototype") && html.includes("Prototype V1") && html.includes("Planned V2") && html.includes("Internal prototype - not released"), `${route.pathname} is missing the scoped AI prototype case study.`);
+      check(html.includes("ManualWarehouse WMS") && html.includes("Dive Center Attendance and Billing System"), `${route.pathname} is missing the two independent customer projects.`);
     }
     check(!/\b(?:birth|born)\b|\bage\s*[:<]/i.test(html), `${route.pathname} exposes birth or age information.`);
     check(/<title>[^<]{10,}<\/title>/i.test(html), `${route.pathname} lacks a descriptive title.`);
@@ -362,7 +373,10 @@ async function verifyPdf(filename, expectedTitle, language = "en") {
   const required = language === "zh"
     ? ["谢官韦（Jacky）", "jackychay@live.com", "美的集团", "后端主导工程师（Technical Lead）", "中国办公室及客户现场", "2024年12月 - 2026年7月", "Swisslog Malaysia Sdn. Bhd.", "马来西亚办公室及区域客户现场", "2020年2月 - 2024年12月", "可接受频繁全球出差", "WhatsApp", "AI 辅助 WMS 故障排查原型", "内部原型 - 尚未发布", "原型 V1", "规划中的 V2", "检索增强生成（RAG）", "只读数据库", "Java", "SQL", "拉曼学院（吉隆坡）"]
     : ["Chay Kun Wai (Jacky)", "jackychay@live.com", "Midea Group", "Backend Lead Engineer (Technical Lead)", "China office and customer sites", "Dec 2024 - Jul 2026", "Swisslog Malaysia Sdn. Bhd.", "Malaysia office and regional customer sites", "Feb 2020 - Dec 2024", "Open to frequent worldwide travel", "WhatsApp", "AI-Assisted WMS Troubleshooting Prototype", "Internal prototype - not released", "Prototype V1", "Planned V2", "retrieval-augmented generation (RAG)", "read-only database", "Java", "SQL", "Tunku Abdul Rahman College"];
-  for (const requiredText of required) {
+  const projectRequired = language === "zh"
+    ? ["ManualWarehouse 仓储管理系统", "潜水中心出勤与账单系统", "Angular", "Java EE", "WildFly", "PostgreSQL"]
+    : ["ManualWarehouse WMS", "Dive Center Attendance and Billing System", "Angular", "Java EE", "WildFly", "PostgreSQL"];
+  for (const requiredText of [...required, ...projectRequired]) {
     check(extracted.includes(requiredText), `${filename} extracted text is missing: ${requiredText}`);
   }
   for (const prohibited of ["QR code", "Date of Birth", "Birth Year", "Age:", "Facebook", "Instagram", "github.com", "production AI", "direct reports", "7+ years", "99.99%"] ) {
